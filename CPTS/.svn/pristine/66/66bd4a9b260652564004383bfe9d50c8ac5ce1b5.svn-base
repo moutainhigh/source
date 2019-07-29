@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>CPTS</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta name="msapplication-TileColor" content="#3399cc" />
+<style>
+	body { background-color: #fbfbfb; }
+	.weui-form-preview__bd { color: #333; font-size: 1em; }
+	.weui-icon-success { color: #09bd88; }
+	.show-company-name { text-align: center; margin-top: 22px; font-size: 24px; color: #006fc7; font-weight: bold; }
+</style>  
+</head>
+<body>
+	<div class="show-pay-box" id="noPayshowBox">
+		<div class="show-company-name" id="showCompanyName"></div>
+		<div class="show-logo-box">
+			<i class="index-logo"></i>
+		</div>
+		<div class="show-title-box">
+			欢迎使用CPTS
+		</div>
+		<div class="weui-form-preview">
+		  <div class="weui-form-preview__hd">
+		    <label class="weui-form-preview__label">付款金额</label>
+		    <em class="weui-form-preview__value" id="showTotalFee"></em>
+		  </div>
+		  <div class="weui-form-preview__bd">
+		    <div class="weui-form-preview__item">
+		      <label class="weui-form-preview__label">停车场名称</label>
+		      <span class="weui-form-preview__value" id="showParkName"></span>
+		    </div>
+		    <div class="weui-form-preview__item">
+		      <label class="weui-form-preview__label">停车时长</label>
+		      <span class="weui-form-preview__value" id="showParkingLen"></span>
+		    </div>
+		    <div class="weui-form-preview__item">
+		      <label class="weui-form-preview__label">入库时间</label>
+		      <span class="weui-form-preview__value" id="showParkDate"></span>
+		    </div>
+		    <div class="weui-form-preview__item">
+		      <label class="weui-form-preview__label">出库时间</label>
+		      <span class="weui-form-preview__value" id="showOutDate"></span>
+		    </div>
+		  </div>
+		</div>
+		<div class="show-pay-btn">
+			<div class="weui-btn weui-btn_primary cursor-pointer" id="wechatPayBtn">支付</div>
+		</div>
+		<div class="show-open-btn none">
+			<div class="weui-btn weui-btn_primary cursor-pointer" id="openBrakeBtn">打开闸门</div>
+		</div>
+	</div>
+	<!-- 显示操作成功 start -->
+	<div class="weui-msg none" id="showSuccessContent">
+	  <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+	  <div class="weui-msg__text-area">
+	    <h2 class="weui-msg__title">支付成功</h2>
+	    <p class="weui-msg__desc">感谢使用CPTS，祝您一路顺风</p>
+	  </div>
+	  <div class="weui-msg__opr-area">
+	    <p class="weui-btn-area">
+	      <a href="javascript:;" class="weui-btn weui-btn_primary" id="closeWindows">关闭</a>
+	    </p>
+	  </div>
+	  <div class="show-download-box">
+		  <div class="show-logo-box">
+				<i class="cpts-download-icon"></i> 
+		  </div>
+		  <div class="show-download-font">
+		  	长按扫码下载CPTS app享有更多优惠
+		  </div>
+	  </div>
+	</div>
+	<!-- 显示操作成功 end -->
+	<script th:inline="javascript">
+	    var totalFee = [[${fee}]];
+		var showParkingLen = [[${parkingTime}]];  //显示停车时长  天小时分钟
+		var outDate = [[${outDate}]];
+		var payFlag = [[${payFlag}]];
+		var parkName = [[${parkName}]];
+		var companyName = [[${companyName}]];
+		var parkingInfoId = [[${parkingInfoId}]];
+		var openid = [[${openid}]];
+		var parkDate = [[${parkDate}]];
+		
+		document.getElementById("showCompanyName").innerHTML = companyName;
+		
+		if(totalFee == 0){
+			$(".show-open-btn").removeClass("none");
+			$(".show-pay-btn").addClass("none");
+		}
+				
+		if(payFlag == 1){ //显示已支付界面
+			document.getElementById("noPayshowBox").classList.add("none");
+			document.getElementById("showSuccessContent").classList.remove("none");
+		}
+	</script>
+	<script>
+		requirejs(['../wechat/js/unlicensedOutPage.js?v='+(new Date()).getTime()]);
+	</script>
+</body>
+</html>

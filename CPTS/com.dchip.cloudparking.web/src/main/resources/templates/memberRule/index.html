@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+</head>
+<body>
+<div class="setting-frame-content">
+
+	<table class="layui-hide" id="memberRuleTable" lay-filter="memberRuleTable"></table>  
+	<script type="text/html" id="memberRuleTableBar">
+  		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	</script>
+	<script type="text/html" id="memberRuleTableBarEnglish">
+  		<a class="layui-btn layui-btn-xs" lay-event="edit">Edit</a>
+	</script>
+	
+</div>
+<div id="showMemberContent" style="display: none;">
+	<!-- 内容显示区域start -->
+	<div class="layuiWindownContent">
+		<div class="layui-form font-num-6" lay-filter="memberFrom">
+			<div class="layui-form-item" >
+			    <label class="layui-form-label" id="memberGrade">会员等级</label>
+			    <div id="gradeShow" class="layui-form-mid layui-word-aux">请填写会员等级</div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label" id="writMemberName">会员描述</label>
+			    <div class="layui-input-block">
+			        <input type="text" id="gradeDescriptionInp" name="gradeDescriptionInp" placeholder="请填写会员描述" autocomplete="off" class="layui-input">
+			    </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label" id="AcquisitionMethod">获取方式</label>
+			    <div id="addWayShow" class="layui-form-mid layui-word-aux">请填写获取方式</div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label" id="AmountStandard">金额标准</label>
+			    <div class="layui-input-block">
+			        <input type="text" id="moneyInp" name="moneyInp" placeholder="请填写金额标准" autocomplete="off" class="layui-input">
+			    </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label" id="MaxNumberOfArrears">最大欠费次数</label>
+			    <div class="layui-input-block">
+			        <input type="text" id="maximumTimesInp" name="maximumTimesInp" placeholder="请填写最大欠费次数" autocomplete="off" class="layui-input">
+			    </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label" id="MaxAmountDue">最大欠费金额</label>
+			    <div class="layui-input-block">
+			        <input type="text" id="maximumArrearsInp" name="maximumArrearsInp" placeholder="请填写最大欠费金额" autocomplete="off" class="layui-input">
+			    </div>
+			</div>
+		</div>
+	</div>
+	<!-- 内容显示区域end -->
+</div>
+<script th:inline="javascript">
+	var i18n = [[${#request.getAttribute("i18n")}]];
+</script>
+<script th:inline="javascript">
+	requirejs([contextPath+'/js/memberRule/memberRule.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

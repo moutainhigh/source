@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: com.dchip.cloudparking.ribbon
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: d-chip
+Implementation-Vendor-Id: com.dchip.cloudparking
+Build-Jdk: 1.8.0_45
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/com.dchip.cloudparking.ribbon
+Created-By: Maven Integration for Eclipse
+

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+<style type="text/css">
+#startTime{width:135px;height:30px;padding: 0px 15px;}
+#endTime{width:135px;height:30px;padding: 0px 15px;}
+.apply{height: 35px;margin-top: -3px;margin-left: 10px;}
+</style>
+</head>
+<body>
+<div class="setting-frame-content">
+    <div class="form-group">
+        <table class="layui-hide" id="applyCashListTable" lay-filter="applyCashListTable"></table>
+    </div>
+</div>
+<script th:inline="javascript">
+	var userName = [[${#request.getAttribute("userName")}]] //停车场管理员名称
+</script>
+<script>
+     requirejs([contextPath + '/js/applyCashList/applyCashList.js?v=' + (new Date()).getTime()]);
+</script>
+</body>
+
+</html>

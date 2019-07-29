@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+</head>
+ <style type="text/css">
+.layui-form-radio{margin: 6px -18px 6px 20px;}
+.layui-input, .layui-textarea {display:inline-block;}
+.minute{display: inline-block; margin-top: 8px; width: 200px; height: 20px;}
+.hour{display: inline-block; margin-top: 8px; width: 200px; height: 20px;}
+</style>
+<body>
+<div class="setting-frame-content">
+	<div class="layui-form" >
+		<div class="layui-form-item" pane="">
+		    <label class="layui-form-label">请选择车道</label>
+		    <div class="layui-input-inline show-out-roadway-box">
+		    </div>
+		    <div  id="manualRefresh" class="layui-btn layui-btn-inline" >刷新</div>
+		</div>
+	</div>
+	<table class="layui-hide" id="cashTable" lay-filter="cashTable"></table>
+</div>
+<script th:inline="javascript">
+	var roadwayList = [[${#request.getAttribute("roadwayList")}]];
+	var parkingId = [[${#request.getAttribute("parkingId")}]];
+	console.log(roadwayList)
+	requirejs([contextPath+'/js/cash/index.js?v='+(new Date()).getTime()]);
+</script>
+
+
+<div id="showCashTableContent" style="display:none;">
+		<!-- 内容显示区域start -->
+	<div class="layuiWindownContent">
+		<div class="layui-form font-num-6" lay-filter="cashFrom">
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">停车场</label>
+			    <div id="parkName" class="layui-form-mid layui-word-aux">请填写停车场名称</div>
+	        </div>
+					
+		    <div class="layui-form-item">
+			    <label class="layui-form-label">车牌号码</label>
+			    <div id="licensePlate" class="layui-form-mid layui-word-aux">请填写车牌号码</div>
+		    </div>
+					
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">出场车道</label>
+			    <div id="roadName" class="layui-form-mid layui-word-aux">请填写出场车道</div>
+			</div>
+					 
+				  
+			<div class="layui-form-item">
+				<label class="layui-form-label">停车时间</label>
+				<div id="parkingTime" class="layui-form-mid layui-word-aux">请填写停车时间</div>
+				<span class="minute">分钟</span>
+			</div>
+				
+			<div class="layui-form-item">
+				<label class="layui-form-label freetime">应收金额</label>
+				<div id="fee" class="layui-form-mid layui-word-aux">请填写应收金额</div>
+				<span class="hour">元</span>
+			</div>
+				
+				
+			</div>
+		</div>
+		<!-- 内容显示区域end -->
+ </div>
+</body>
+</html>

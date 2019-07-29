@@ -1,0 +1,332 @@
+define(['jquery', 'layui','until'], function($,LAYUI,until){
+	layui.use(['table','form'], function(){
+		
+		var table = layui.table;
+		var form = layui.form;
+		if(i18n == 'en_US'){
+			table.render({
+				elem : '#companyTable',
+				 url : contextPath+"/companyManage/rendering",
+			  method : 'post',
+		cellMinWidth : 150 ,// 全局定义常规单元格的最小宽度，layui 2.2.1 新增
+				skin : 'line',
+			   where : { 
+					 sortName: 'id',
+					 direction: 'desc'
+				},
+				cols : [[
+			         { field:'companyName', title: 'companyName', sort: true, align: 'center'},
+			         { field:'legalPerson', title: 'legalPerson', sort: true, align: 'center'},
+			         { field:'tel', title: 'tel', sort: true, align: 'center'},
+			         { field:'bankCard', title: 'bankCard', sort: true, align: 'center'},
+			         { field:'bankHolder', title: 'bankHolder', sort: true, align: 'center'},
+			         { field:'createTime', title: 'createTime', sort: true, align: 'center',templet: function (data) {
+			        	 if(data.createTime == null){
+		            		 return "";
+		            	 } else {
+		            		 return until.formatDateTime(data.createTime);
+		            	 }
+			           }
+			         },
+			         { fixed: 'right', title: 'right', toolbar: '#companyTableBarEnglish', align: 'center', width:150 }
+			        ]],
+			 response : {
+			        countName: 'totalElements', //规定数据总数的字段名称，默认：count
+			         dataName: 'content' //规定数据列表的字段名称，默认：data
+			      }, 
+				 page : true
+			});
+		}else{
+			table.render({
+				elem : '#companyTable',
+				 url : contextPath+"/companyManage/rendering",
+			  method : 'post',
+		cellMinWidth : 150 ,// 全局定义常规单元格的最小宽度，layui 2.2.1 新增
+				skin : 'line',
+			   where : { 
+					 sortName: 'id',
+					 direction: 'desc'
+				},
+				cols : [[
+			         { field:'companyName', title: '公司名称', sort: true, align: 'center'},
+			         { field:'legalPerson', title: '公司法人', sort: true, align: 'center'},
+			         { field:'tel', title: '联系电话', sort: true, align: 'center'},
+			         { field:'bankCard', title: '银行卡号', sort: true, align: 'center'},
+			         { field:'bankHolder', title: '银行卡持有人', sort: true, align: 'center'},
+			         { field:'createTime', title: '创建时间', sort: true, align: 'center',templet: function (data) {
+			        	 if(data.createTime == null){
+		            		 return "";
+		            	 } else {
+		            		 return until.formatDateTime(data.createTime);
+		            	 }
+			           }
+			         },
+			         { fixed: 'right', title: '操作', toolbar: '#companyTableBar', align: 'center', width:150 }
+			        ]],
+			 response : {
+			        countName: 'totalElements', //规定数据总数的字段名称，默认：count
+			         dataName: 'content' //规定数据列表的字段名称，默认：data
+			      }, 
+				 page : true
+			});
+		}
+		
+		//切换英文
+		if(i18n == 'en_US'){
+			$("#operaCompanyName").empty();
+			$("#operaCompanyName").append('Name');
+			$("#searchCompanyTo").empty();
+			$("#searchCompanyTo").append('Search');
+			$("#addCompany").empty();
+			$("#addCompany").append('AddCompany');
+			$("#companyName").empty();
+			$("#companyName").append('Company');
+			$("#corporateLegalPerson").empty();
+			$("#corporateLegalPerson").append('LegalPerson');
+			$("#contactNumber").empty();
+			$("#contactNumber").append('ContactNum');
+			$("#BankCardNumber").empty();
+			$("#BankCardNumber").append('BankCardNum');
+			$("#bankHolder").empty();
+			$("#bankHolder").append('BankHolder');
+			$("#DefaultAccount").empty();
+			$("#DefaultAccount").append('Default');
+			$("#TransferWay").empty();
+			$("#TransferWay").append('TransferWay');
+			$("#searchCompanyName").attr("placeholder","CompanyName");
+		}
+			
+			
+			/**
+			 * 排序方法
+			 */
+			table.on('sort(companyTable)', function(obj){
+				  table.reload('companyTable', {
+				       initSort : obj ,
+				          where : {
+				               field: obj.field, //排序字段
+				               order: obj.type //排序方式
+				          }
+				     });
+			});
+			
+			/**
+			 * 搜索方法
+			 */
+			$("#searchCompanyTo").click(function() {
+				  table.reload('companyTable', {
+					     where : { searchCompanyName: $("#searchCompanyName").val()},
+					      page : {curr: 1 }//重新从第 1 页开始
+					});
+			});
+			
+			/**
+			  * 监听行工具事件
+			  */
+			 table.on('tool(companyTable)', function(obj) {
+			     var data = obj.data;
+			     var titel = "真的删除吗";
+			     if(i18n == 'en_US'){
+			    	 titel = "Do you really delete it?"
+			     }
+			     if(obj.event === 'del') { //执行删除方法
+			         layer.confirm(titel, function(index) {
+			        	 $.ajax({
+		 					  url : contextPath+"/companyManage/delete",
+		 				 dataType : 'json',
+		 					 type : 'post',
+		 					async : false,
+		 					 data : {
+		 						 companyId: data.id,
+		 						 companyBalanceWayId: data.companyBalanceWayId
+		 					  },
+		 				 complete : function(XHR, TS) {
+		 						  var returnObj = eval('(' + XHR.responseText + ')');
+		 						  if(returnObj.code != 200) {
+		 							 layer.msg(returnObj.msg, {icon: 2, time: 1500});
+		 						  } else {
+		 							 layer.msg("操作成功", {icon: 1, time: 1500});		 							 
+		 						  }
+		 						 table.reload('companyTable');
+		 					  }
+		 				});//ajax结束
+			         });
+			     } else if(obj.event === 'edit') {//执行编辑方法
+			    	 editCompany("edit",data);
+			     }
+			});
+			 
+			 /**
+			  * 添加公司点击事件
+			  */
+			 $("#addCompany").click(function() {
+				 editCompany("add");
+			 });
+			 
+			//编辑或添加公司的具体操作
+			function editCompany(type,data) {
+				 var showTitle = '编辑';
+				 var responseUrl = "/companyManage/edit";
+				 var companyId = 0;
+				 var companyBalanceWayId = 0;
+				 var showContent = $('#showCompanyDetail').html();
+			 	      $('#showCompanyDetail').html("");
+			 	      if(type == "add"){
+			 	    	  showTitle = '添加';
+			 	    	  responseUrl = "/companyManage/add";
+			 	      }else{
+			 	    	  companyId = (data.id == undefined ? 0: data.id);
+			 	    	  companyBalanceWayId = (data.companyBalanceWayId == undefined ? 0: data.companyBalanceWayId);
+			 	      }
+					layer.open({
+				 			type : 1,
+				 			  id : 'showLayui',
+				 		   title : showTitle,
+				 		 content : showContent,
+				 			area : '600px',
+				 			 btn : ['确定','取消'],
+				 		btnAlign : 'c',
+				 		
+				 		 success : function(layero, index){
+				 			    //验证手机号码
+					 			$("#tel").change(function(){
+						 			var phone =$("#tel").val();
+						 			if(!(/^1[34578]\d{9}$/.test(phone))){ 
+						 				layer.msg("手机号码有误，请重新输入"); 
+						 				$("#tel").val('');
+						 				return false; 
+						 			} 			
+						 	});
+					 			//验证银行卡号	
+					 			$("#bankCard").change(function(){
+					 			     var pattern = /^([1-9]{1})(\d{14}|\d{18})$/, 
+					 			     str = $("#bankCard").val().replace(/\s+/g, "");
+						 			 if (!pattern.test(str)) {
+                                         $("#setBankNum").css("display","none");
+                                         $("#setBankName").css("display","none");
+						 				 layer.msg("请输入正确的银行卡号！");
+                                         $("#bankCard").val("");
+                                         $("#bankNum").val("");
+                                         $("#bankName").val("");
+			                            return false;
+			                         }else{
+						 			 	 // 测试卡号:
+										 // 6222600260001072444
+                                         $.ajax({
+                                             url : "https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?_input_charset=utf-8&cardBinCheck=true&cardNo="+$("#bankCard").val(),
+                                             dataType : 'json',
+                                             type : 'get',
+                                             async : false,
+                                             data : {},
+                                             complete : function(XHR, TS) {
+                                                 var returnObj = eval('(' + XHR.responseText + ')');
+                                                 $("#setBankNum").css("display","");
+                                                 $("#setBankName").css("display","");
+                                                 try{
+                                                     $("#bankNum").val(returnObj.bank);
+                                                     $("#bankName").val(until.getBankNameByNum(returnObj.bank.toUpperCase()));
+												 }catch (e) {
+                                                     $("#bankNum").val("");
+                                                     $("#bankName").val("");
+                                                     $("#setBankNum").css("display","none");
+                                                     $("#setBankName").css("display","none");
+                                                 }
+                                             }
+                                         });//ajax结束
+									 }
+							});
+
+					 			
+				 				layui.use(['form', 'layer'], function() {
+				 					var form = layui.form;
+				 					var layer = layui.layer;
+				 					if(type == "edit"){
+				 					    //表单赋值
+				 						$("input[name='isFirst'][value="+data.isFirst+"]").attr("checked",true); 
+				 						$("input[name='balanceWay'][value="+data.balanceWay+"]").attr("checked",true); 
+				 						var bankcard = data.bankCard.replace(/\s*/g,"");
+					 					form.val('companyFrom', { //给表单里面的字段赋值  通过name属性
+					 						    "name": data.companyName,
+					 					        "legalPerson": data.legalPerson,
+					 					        "tel": data.tel,
+					 					        "bankCard": bankcard,
+					 					        "bankHolder": data.bankHolder
+					 					 });
+				 					 }
+				 					 form.render();  //重新渲染表单
+				 				});
+				 		},//success结束
+				 		
+				 		yes : function(index, layero) { // 确定按钮
+							var msgArr = ["公司名称不能为空", "公司法人不能为空", "联系电话不能为空", "银行卡账号不能为空", "银行卡持有人不能为空"]; // 提示语集合
+							var clsArr = ["#name", "#legalPerson","#tel","#bankCard","#bankHolder"]; // id集合
+							var validateFlag = until.validate(msgArr, clsArr); // 非空验证,需要引入工具js文件until
+							if (validateFlag) {
+								layer.msg(validateFlag, {
+									anim : 6,
+									time : 2500
+								});
+								return;
+							};
+							//验证手机号码
+							var phone = $("#tel").val();
+				 			if(!(/^1[34578]\d{9}$/.test(phone))){ 
+				 				layer.msg("手机号码有误，请重新输入");  
+				 				return false; 
+				 			};
+				 			//验证银行卡号
+				 			var pattern = /^([1-9]{1})(\d{14}|\d{18})$/, 
+			 			    str = $("#bankCard").val().replace(/\s+/g, "");
+				 			if (!pattern.test(str)) {
+				 				layer.msg("请正确输入银行卡号！");  
+	                            return false;
+	                        }
+
+							$.ajax({
+								  url : contextPath + responseUrl,
+						          dataType : 'json',
+							      type : 'post',
+							      async : false,
+							      data : {
+									    companyId: companyId,
+									    companyBalanceWayId: companyBalanceWayId,
+									    companyName: $("#name").val(),
+									    legalPerson: $("#legalPerson").val(),
+									    tel: $("#tel").val(),
+									    bankCard: $("#bankCard").val(),
+									    bankHolder: $("#bankHolder").val(),
+									    balanceWay: $("input[name='balanceWay']:checked").val(),
+									    bankNum: $("#bankNum").val(),
+									    bankName: $("#bankName").val(),
+									    isFirst: $("input[name='isFirst']:checked").val()
+								   },
+						   complete : function(XHR, TS) {
+									var returnObj = eval('(' + XHR.responseText + ')');
+									if (returnObj.code != 200) {
+										layer.msg(returnObj.msg, {
+											icon : 2,
+											time : 1500
+										});
+									} else {
+										layer.msg("操作成功", {
+											icon : 1,
+											time : 1500
+										});
+									}
+									layer.close(index);
+									table.reload('companyTable');
+								}
+							});
+						}, //yes结束
+				
+				 			
+						end : function() { // 只要层被销毁了，end都会执行
+						 	$('#showCompanyDetail').html(showContent);
+					}
+				 			
+				});
+	 	  };//编辑或添加公司的具体操作 end
+	 	  
+	});
+	
+});

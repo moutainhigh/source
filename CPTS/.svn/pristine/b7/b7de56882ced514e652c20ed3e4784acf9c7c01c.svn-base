@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+<style type="text/css">
+.cartype{width: 90px;padding: 9px;}
+.search{margin-left: 15px;border-radius: 6px;}
+.addWhiteList{border-radius: 6px;}
+.recognition{margin: 9px 9px 0 0;padding-right: 5px;}
+.radioBox{margin-left: 148px;width: 360px;height: 200px;border: 1px solid #bdb3b3;padding: 5px 15px;border-radius: 10px;}
+.radioBoxTwo{margin-left: 148px;width: 360px;height: 335px;border: 1px solid #bdb3b3;padding: 5px 15px;border-radius: 10px;}
+.left{margin-left: 35px;}
+.type{margin-right: 45px;margin-top: 2px;}
+.red{color:red;}
+</style>
+</head>
+
+<body>
+<div class="setting-frame-content">
+  <div class="form-group">
+  	<div class="layui-form" style="display: inline-block;">
+  		<div class="layui-form-item" style="display: inline-block;">
+			<label class="layui-form-label cartype" id="whiteLicensePlateName">车牌类型名称</label>
+			<div class="layui-input-block">
+				<select id="searchLicensePlateName" name="searchLicensePlateName" lay-verify="" lay-search>
+				</select>
+			</div>
+		</div>
+    </div>
+    <div id="searchWhiteList" class="layui-btn search">搜索</div>
+    <div id="addLicensePlate" class="layui-btn addWhiteList" style="display: inline-block;">添加白名单</div>
+    <table class="layui-hide" id="firstWhiteListTable" lay-filter="firstWhiteListTable"></table>
+    <script>
+        requirejs([contextPath + '/js/firstWhiteList/firstWhiteList.js?v=' + (new Date()).getTime()]);
+    </script>
+  </div>
+</div>
+<div id="showFirstWhiteListContent" style="display: none;">
+    <!-- 内容显示区域start -->
+    <div class="layuiWindownContent">
+        <div class="layui-form font-num-6" lay-filter="firstWhiteListFrom">
+        <div class="layui-form-item" id="">
+			<label class="layui-form-label type" id="FirstWhiteType"><span class="red">* </span>类型</label>
+			<div>
+				<input type="radio" name="recognition" class="recognition" lay-filter="recognition" value="1" title="摄像识别类型A"> 
+				<input type="radio" name="recognition" class="recognition" lay-filter="recognition" value="0" title="摄像识别类型B">
+				<input type="radio" name="recognition" class="recognition" lay-filter="recognition" value="2" title="摄像识别类型C">
+			</div>
+		</div>
+         <div class="layui-form-item left none" id="typeA">
+		    <label class="layui-form-label" style="width:120px; margin-left:-35px; margin-right: 12px;"><span class="red">* </span>摄像识别类型A</label>
+		    <div class="layui-input-inline">
+		    	<select id="licensePlateNameA" name="licensePlateNameA" lay-verify="" lay-search>
+				</select>
+		    </div>
+  		 </div>
+         <div class="layui-form-item left none" id="typeB">
+		    <label class="layui-form-label" style="width:120px; margin-left:-35px; margin-right: 12px;"><span class="red">* </span>摄像识别类型B</label>
+		    <div class="layui-input-inline">
+		    	<select id="licensePlateNameB" name="licensePlateNameB" lay-verify="" lay-search>
+				</select>
+		    </div>
+  		</div>
+         <div class="layui-form-item left none" id="typeC">
+		    <label class="layui-form-label" style="width:120px; margin-left:-35px; margin-right: 12px;"><span class="red">* </span>摄像识别类型C</label>
+		    <div class="layui-input-inline">
+		    	<select id="licensePlateNameC" name="licensePlateNameC" lay-verify="" lay-search>
+				</select>
+		    </div>
+  		</div>
+       </div>
+    </div>
+    <!-- 内容显示区域end -->
+</div>
+<script th:inline="javascript">
+	var i18n = [[${#request.getAttribute("i18n")}]];
+	var licensePlateName = [[${#request.getAttribute("licensePlateName")}]];
+	var licensePlateNameA = [[${#request.getAttribute("licensePlateNameA")}]];
+	var licensePlateNameB = [[${#request.getAttribute("licensePlateNameB")}]];
+	var licensePlateNameC = [[${#request.getAttribute("licensePlateNameC")}]];
+    requirejs([contextPath + '/js/firstWhiteList/firstWhiteList.js?v=' + (new Date()).getTime()]);
+</script>
+</body>
+
+</html>

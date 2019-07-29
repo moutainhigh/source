@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>云停车平台</title>
+    <style type="text/css">
+        .search {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .red {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+<div class="setting-frame-content">
+    <div class="form-group">
+        <div class="layui-form" style="display: inline-block;">
+            <div class="layui-form-item" style="display: inline-block;">
+                <label class="layui-form-label">管理员账户</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" id="loginAccount" name="loginAccount" placeholder="请输入登录账号"
+                           autocomplete="off">
+                </div>
+            </div>
+            <!-- <div class="layui-form-item" style="display: inline-block;">
+                <label class="layui-form-label">管理员类型</label>
+                <div class="layui-input-block">
+                    <select id="searchManagerType" name="searchManagerType" lay-filter="searchManagerType">
+                        <option value="2">公司管理员</option>
+                    </select>
+                </div>
+            </div> -->
+            <div id="searchAccount" class="layui-btn search">搜索</div>
+            <div id="addAccount" class="layui-btn" style="display: inline-block;">添加管理员</div>
+        </div>
+        <table class="layui-hide" id="accountTable" lay-filter="accountTable"></table>
+    </div>
+</div>
+<script>
+    requirejs([contextPath + '/js/account/company.js?v=' + (new Date()).getTime()]);
+</script>
+<div id="showAccountContent" style="display: none;">
+    <!-- 内容显示区域start -->
+    <div class="layuiWindownContent">
+        <div class="layui-form" lay-filter="accountFrom">
+            <div class="layui-form-item" style="display: none;">
+                <label class="layui-form-label">管理员id</label>
+                <div class="layui-input-block">
+                    <input type="text" id="accountId" name="accountId" placeholder="请填写管理员id" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" style="display: none;">
+                <label class="layui-form-label">公司id</label>
+                <div class="layui-input-block">
+                    <input type="text" id="companyId" name="companyId" placeholder="公司id" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" id="parkingAccount">
+                <label class="layui-form-label"><span class="red">* </span>帐号</label>
+                <div class="layui-input-block">
+                    <input type="text" id="userPhone" name="userPhone" placeholder="请填写手机号码" autocomplete="off" required
+                           lay-filter="userPhone" oninput="if(value.length>11)value=value.slice(0,11)"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" id="name">
+                <label class="layui-form-label"><span class="red">* </span>姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" id="realName"
+                           name="realName"
+                           placeholder="请填写真实姓名"
+                           autocomplete="off"
+                           oninput="if(value.length>15)value=value.slice(0,15)"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" id="showAccountInitPW">
+                <label class="layui-form-label">初始密码</label>
+                <div class="layui-input-block">
+                    <input type="text" id="pwd" name="pwd" placeholder="默认密码123456" autocomplete="off"  class="layui-input" disabled>
+                </div>
+            </div>
+			<div class="layui-form-item none" id="showCompanyAccountRoleSel">
+           		<label class="layui-form-label"><span class="red">* </span>选择角色</label>
+           		<div class="layui-input-block">
+           			<select name="companyAccountRoleSel" id="companyAccountRoleSel" lay-filter="companyAccountRoleSel">
+           			</select>
+           		</div>
+            </div>
+            <div class="layui-form-item" id="showParkingAccountRoleSel">
+                <label class="layui-form-label"><span class="red">* </span>选择角色</label>
+                <div class="layui-input-block">
+                    <select name="parkingAccountRoleSel" id="parkingAccountRoleSel" lay-filter="parkingAccountRoleSel">
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item" id="showAccountParkingSel">
+                <label class="layui-form-label"><span class="red">* </span>所属停车场</label>
+                <div class="layui-input-block">
+                    <select name="accountParkingSel" id="accountParkingSel" lay-filter="accountParkingSel">
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- 内容显示区域end -->
+</div>
+<script th:inline="javascript">
+    var parkingRoleList = [[${#request.getAttribute("parkingRoleList")}]] //停车场管理员角色列表
+    var companyRoleList = [[${#request.getAttribute("companyRoleList")}]] //公司管理员角色列表
+    var companyList = [[${#request.getAttribute("companyList")}]] //公司列表
+</script>
+</body>
+
+</html>

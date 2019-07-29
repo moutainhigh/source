@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>云停车平台</title>
+</head>
+<body>
+<div class="setting-frame-content">
+    <div class="form-group">
+        <div class="layui-form" style="display: inline-block;">
+            <div class="layui-form-item" style="display: inline-block;margin-left: -26px !important;">
+                <label class="layui-form-label">发券商户</label>
+                <div class="layui-input-block">
+                    <input type="text" name="realName" id="realName" autocomplete="off" placeholder="请输入商户全名"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" style="display: inline-block;">
+                <label class="layui-form-label">使用状态</label>
+                <div class="layui-input-block">
+                    <select name="status" id="status">
+                        <option value="">全部</option>
+                        <option value="0">未使用</option>
+                        <option value="1">已使用</option>
+                        <option value="2">已过期</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item" style="display: inline-block;">
+                <label class="layui-form-label">车牌号码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="licensePlate" id="licensePlate" autocomplete="off" placeholder="请输入车牌号码"
+                           class="layui-input">
+                </div>
+            </div>
+            <div id="search" class="layui-btn search">搜索</div>
+            <div id="export" class="layui-btn">导出使用列表</div>
+        </div>
+        <table class="layui-hide" id="deductionManageTable" lay-filter="deductionManageTable"></table>
+    </div>
+</div>
+<div id="showDeductionContent" style="display: none;">
+    <!-- 内容显示区域start -->
+    <div class="layuiWindownContent">
+        <div class="layui-form font-num-6" lay-filter="commitFormFilter">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="red">* </span>抵扣券名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="name" name="name" placeholder="抵扣券名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="red">* </span>抵扣小时数</label>
+                <div class="layui-input-inline">
+                    <input type="number" id="hourNum" name="hourNum" placeholder="小时" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">到期时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="dueTime" name="dueTime" placeholder="不填则一直有效" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="status" lay-filter="status" value="0" title="可用">
+                    <input type="radio" name="status" lay-filter="status" value="1" title="不可用" checked>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    var domain = [[${#request.getAttribute("domain")}]];
+    var domainUrl = [[${#request.getAttribute("domainUrl")}]];
+    var bucketZone = [[${#request.getAttribute("bucketZone")}]];
+    var token = [[${#request.getAttribute("token")}]];
+    var type = [[${#request.getAttribute("roleType")}]];
+</script>
+<script>
+    requirejs([contextPath + '/js/deductionManage/deductionManage.js?v=' + (new Date()).getTime()]);
+    requirejs([contextPath + '/thirdplugin/qiniuUpload.js?v=' + (new Date()).getTime()]);
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+define(['jquery', 'layui', 'until'], function ($, LAYUI, until) {
+    var table;
+    var form;
+    layui.use(['table', 'form', 'laydate'], function () {
+        table = layui.table;
+        form = layui.form;
+        if(i18n == 'en_US'){
+        	table.render({
+                elem: '#lockCommandModelTable',
+                url: contextPath + "/lockCommand/rendering",
+                method: 'post',
+                cellMinWidth: 150,//全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                skin: 'line',
+                where: {
+                    sortName: 'id',
+                    direction: 'desc'
+                },
+                cols: [[
+                    {field: 'id', hide: true},
+                    {field: 'commond', title: 'commond', align: 'center'},
+                    {field: 'groundLockId', title: 'groundLockId', align: 'center'},
+                    {field: 'createTime', title: 'createTime', align: 'center'}
+                ]],
+                response: {
+                    countName: 'totalElements', //规定数据总数的字段名称，默认：count
+                    dataName: 'content' //规定数据列表的字段名称，默认：data
+                },
+                page: true
+            });
+        }else{
+        	table.render({
+                elem: '#lockCommandModelTable',
+                url: contextPath + "/lockCommand/rendering",
+                method: 'post',
+                cellMinWidth: 150,//全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                skin: 'line',
+                where: {
+                    sortName: 'id',
+                    direction: 'desc'
+                },
+                cols: [[
+                    {field: 'id', hide: true},
+                    {field: 'commond', title: '指令', align: 'center'},
+                    {field: 'groundLockId', title: '地锁id', align: 'center'},
+                    {field: 'createTime', title: '创建时间', align: 'center'}
+                ]],
+                response: {
+                    countName: 'totalElements', //规定数据总数的字段名称，默认：count
+                    dataName: 'content' //规定数据列表的字段名称，默认：data
+                },
+                page: true
+            });
+        }
+        
+
+
+    });
+
+});

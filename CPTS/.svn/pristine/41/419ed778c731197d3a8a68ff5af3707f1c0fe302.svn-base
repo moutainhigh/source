@@ -1,0 +1,272 @@
+define(['jquery', 'layui', 'until'], function ($, LAYUI, until) {
+	if(type!=1){
+		$("#orderApplyCash").removeClass("none");
+	}else{//admin
+		$("#orderApplyCash").addClass("none");
+	}
+	
+	layui.use(['table', 'form','laydate'], function () {
+		var laydate = layui.laydate;
+		//执行一个laydate实例
+		laydate.render({
+		    elem: '#searchStartTime',
+		    type: 'datetime' //指定元素
+		});	  
+		laydate.render({
+			elem: '#searchEndTime',
+			type: 'datetime' //指定元素
+		});	  
+		var table = layui.table;
+		var form = layui.form;
+		form.render();
+		
+		if(i18n == 'en_US'){
+			table.render({
+				elem: '#orderTable',
+				url: contextPath + "/order/rending",
+				method: 'post',
+				cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+				skin: 'line',
+				where: {
+					sortName: 'payTime',
+					direction: 'desc'
+				},
+				cols: [[
+					{ field: 'parkName', title: 'parkName', sort: true, align: 'center' , templet: function(data){
+						if(data.parkName){
+							return data.parkName;
+						}else{
+							return "无";
+						}
+					  }
+					},
+					{ field: 'parkingInfoLicensePlate', title: 'licensePlate', sort: true, align: 'center' , templet: function(data){
+						if(data.parkingInfoLicensePlate){
+							return data.parkingInfoLicensePlate;
+						}else if(data.appointmentLicensePlate){
+							return data.appointmentLicensePlate;
+						}else{
+							return "无";
+						}
+					  }
+					},
+					// { field: 'fee', title: '应缴费用', sort: true, align: 'center' },
+					// { field: 'fee', title: '停车场费用', sort: true, align: 'center' },
+					{ field: 'finalFee', title: 'finalFee', sort: true, align: 'center' },
+					{ field: 'payTime', title: 'payTime', sort: true, align: 'center',templet:function(data){
+						if(data.payTime == null){
+							return "";
+						}else {
+							return until.formatDateTime(data.payTime);
+						}
+					  } 
+					},
+					{ field: 'type', title: 'payType', sort: true, align: 'center', templet:function(data){
+						if(data.type == 1){
+							return "支付宝";
+						}else if(data.type == 2){
+							return "微信";
+						}else if(data.type == 3){
+							return "余额";
+						}else if(data.type == 4){
+							return "现金";
+						}
+					  } 
+					},
+					{ field: 'status', title: 'status', sort: true, align: 'center', templet:function(data){
+						if(data.status == 0){
+							return "未支付";
+						}else if(data.status == 1){
+							return '<font color="green">已支付</font>';
+						}else {
+							return '<font color="red">支付失败</font>';
+						}
+					  } 
+					},
+					{ field: 'isTransfer', title: 'isTransfer', sort: true, align: 'center', templet:function(data){
+						if(data.isTransfer == 0){
+							return "未提现";
+						}else{
+							return '<font color="green">已提现</font>';
+						}
+					}
+					}
+				]],
+				response: {
+					countName: 'totalElements',  //规定数据总数的字段名称，默认：count
+					dataName: 'content' //规定数据列表的字段名称，默认：data
+				},
+				page: true
+			});
+		}else{
+			table.render({
+				elem: '#orderTable',
+				url: contextPath + "/order/rending",
+				method: 'post',
+				cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+				skin: 'line',
+				where: {
+					sortName: 'payTime',
+					direction: 'desc'
+				},
+				cols: [[
+					{ field: 'parkName', title: '停车场名称', sort: true, align: 'center' , templet: function(data){
+						if(data.parkName){
+							return data.parkName;
+						}else{
+							return "无";
+						}
+					  }
+					},
+					{ field: 'parkingInfoLicensePlate', title: '车牌号码', sort: true, align: 'center' , templet: function(data){
+						if(data.parkingInfoLicensePlate){
+							return data.parkingInfoLicensePlate;
+						}else if(data.appointmentLicensePlate){
+							return data.appointmentLicensePlate;
+						}else{
+							return "无";
+						}
+					  }
+					},
+					// { field: 'fee', title: '应缴费用', sort: true, align: 'center' },
+					// { field: 'fee', title: '停车场费用', sort: true, align: 'center' },
+					{ field: 'finalFee', title: '支付金额', sort: true, align: 'center' },
+					{ field: 'payTime', title: '支付时间', sort: true, align: 'center',templet:function(data){
+						if(data.payTime == null){
+							return "";
+						}else {
+							return until.formatDateTime(data.payTime);
+						}
+					  } 
+					},
+					{ field: 'type', title: '支付类型', sort: true, align: 'center', templet:function(data){
+						if(data.type == 1){
+							return "支付宝";
+						}else if(data.type == 2){
+							return "微信";
+						}else if(data.type == 3){
+							return "余额";
+						}else if(data.type == 4){
+							return "现金";
+						}
+					  } 
+					},
+					{ field: 'status', title: '支付状态', sort: true, align: 'center', templet:function(data){
+						if(data.status == 0){
+							return "未支付";
+						}else if(data.status == 1){
+							return '<font color="green">已支付</font>';
+						}else {
+							return '<font color="red">支付失败</font>';
+						}
+					  } 
+					},
+					{ field: 'isTransfer', title: '提现状态', sort: true, align: 'center', templet:function(data){
+						if(data.isTransfer == 0){
+							return "未提现";
+						}else{
+							return '<font color="green">已提现</font>';
+						}
+					}
+					}
+				]],
+				response: {
+					countName: 'totalElements',  //规定数据总数的字段名称，默认：count
+					dataName: 'content' //规定数据列表的字段名称，默认：data
+				},
+				page: true
+			});
+		}
+		
+		//切换英文
+		if(i18n == 'en_US'){
+			$("#reportParkingName").empty();
+			$("#reportParkingName").append('ParkingName');
+			$("#reportPayTime").empty();
+			$("#reportPayTime").append('PayTime');
+			$("#reportPayType").empty();
+			$("#reportPayType").append('PayType');
+			$("#reportPayStatus").empty();
+			$("#reportPayStatus").append('PayStatus');
+			$("#reportWithdrawStatus").empty();
+			$("#reportWithdrawStatus").append('WithdrawStatus');
+			$("#orderSearch").empty();
+			$("#orderSearch").append('Search');
+			$("#searchFinanceParking").attr("placeholder","ParkingName");
+			$("#searchStartTime").attr("placeholder","StartTime");
+			$("#searchEndTime").attr("placeholder","EndTime");
+		}
+
+
+		table.on('sort(orderTable)', function (obj) {
+			table.reload('orderTable', {
+				initSort: obj, //记录初始排序，如果不设的话，将无法标记表头的排序状态。 layui 2.1.1 新增参数
+				where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+					field: obj.field, //排序字段
+					order: obj.type //排序方式
+				}
+			});
+		});
+
+		$("#orderSearch").click(function () {
+			table.reload('orderTable', {
+				where: { //设定异步数据接口的额外参数，任意设
+					searchParking: $("#searchFinanceParking").val(),
+					searchStartTime: $("#searchStartTime").val(),
+					searchEndTime: $("#searchEndTime").val(),
+					payType: $("#payType").val(),
+					payStatus: $("#payStatus").val(),
+					isTransfer: $("#isTransfer").val()
+				},
+				page: {
+					curr: 1 //重新从第 1 页开始
+				}
+			});
+		});
+		
+		//提现申请
+		$("#withdrawApply").click(function(obj){
+			$.ajax({
+				//获取提现信息
+				url: contextPath + "/order/getWithdrawalInfo",
+				dataType: 'json',
+				type: 'post',
+				data: {},
+				complete: function (XHR, TS) {
+					var returnObj = eval('(' + XHR.responseText + ')');
+					var data = returnObj.data;
+					if (returnObj.code == 200 && data.count>0) {
+						layer.confirm('当前有'+data.count+'张订单未提现,总金额：'+data.fee+'元', function (index1) {
+							$.ajax({
+								//提交提现申请
+								url: contextPath + "/order/applyWithdrawal",
+								dataType: 'json',
+								type: 'post',
+								data: {
+									orderIds:data.orderIds,
+									fee:data.fee
+								},
+								complete: function (XHR, TS) {
+									var returnObj = eval('(' + XHR.responseText + ')');
+									layer.close(index1);
+									layer.msg(returnObj.msg, {
+										icon : 1,
+										time : 1500
+									});
+								}
+							});
+						});
+					}else{
+						layer.msg('暂无可提现的订单', {
+							icon : 2,
+							time : 2000
+						});
+					}
+				}//complete
+				
+			});//外层ajax
+		});//提现申请
+		
+
+	});
+});

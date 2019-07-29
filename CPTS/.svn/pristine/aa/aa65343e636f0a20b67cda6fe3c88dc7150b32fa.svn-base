@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+		<div class="layui-form" style="display: inline-block;">
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">MAC名称</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="title" id="searchMAC" lay-verify="title" autocomplete="off" placeholder="请输入MAC名称" class="layui-input">
+	    </div>
+	  </div>
+	 </div>
+	  <div id="search" class="layui-btn" style="display: inline-block;margin-top: -60px;">搜索</div>
+		<table class="layui-hide" id="mainApkVersionRuleTable" lay-filter="mainApkVersionRuleTable"></table>  
+	</div>
+</div>
+<script th:inline="javascript">
+	    var versionCode = [[${#request.getAttribute("versionCode")}]]; // type为100 最新版本
+</script>
+<script th:inline="javascript">
+	requirejs([contextPath+'/js/mainapkversion/mainapkversion.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

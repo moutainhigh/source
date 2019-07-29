@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+<style type="text/css">
+.layui-form-radio{margin: 6px -18px 6px 20px;}
+.layui-input, .layui-textarea {display:inline-block;}
+.red{color:red}
+.endTime{padding: 10px 13px 7px 17px;letter-spacing: 4px;}
+.deductionStatus{padding: 10px 0px 5px 33px;letter-spacing: 28px;}
+</style>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+	 <div id="addDeductionModel" class="layui-btn" >添加抵扣券</div>
+	 <table class="layui-hide" id="deductionModelTable" lay-filter="deductionModelTable"></table>
+    </div>
+</div>
+<div id="showDeductionContent" style="display: none;">
+	<!-- 内容显示区域start -->
+	<div class="layuiWindownContent">
+	<div class="layui-form font-num-6" lay-filter="commitFormFilter">
+		<div class="layui-form-item" id="deductionParkName">
+             <label class="layui-form-label"><span class="red">* </span>停车场名称</label>
+             <div class="layui-input-block">
+                 <select id="parkName" name="parkName" lay-filter="parkName"></select>
+             </div>
+        </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="red">* </span>抵扣券名称</label>
+			<div class="layui-input-block">
+				<input type="text" id="name" name="name" placeholder="抵扣券名称" autocomplete="off" class="layui-input" oninput="if(value.length>20)value=value.slice(0,20)"
+				>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="red">* </span>抵扣小时数</label>
+			<div class="layui-input-block">
+				<input 
+				type="number" 
+				id="hourNum" 
+				name="hourNum" 
+				placeholder="请输入整数" 
+				autocomplete="off" 
+				class="layui-input"  
+				onblur="check(this)"
+				onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label endTime">到期时间</label>
+			<div class="layui-input-block">
+				<input type="text" id="dueTime" name="dueTime" placeholder="不填则一直有效" autocomplete="off" class="layui-input" readonly="readonly">
+			</div>
+		</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label deductionStatus">状态</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="status" lay-filter="status" value="0" title="可用" checked="checked">
+		      <input type="radio" name="status" lay-filter="status"  value="1" title="不可用">
+		    </div>
+ 		</div>
+	</div>
+  </div>
+</div>
+<script th:inline="javascript">
+    var parkingId = [[${#request.getAttribute("parkingId")}]];
+    var roleType = [[${#request.getAttribute("roleType")}]];
+</script>
+<script>
+	requirejs([contextPath+'/js/deductionModel/deductionModel.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

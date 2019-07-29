@@ -1,0 +1,15 @@
+com\dchip\cloudparking\ApplicationContextRegister.class
+com\dchip\cloudparking\model\vo\HeartBeatVO.class
+com\dchip\cloudparking\socket\utils\MessageUtil.class
+com\dchip\cloudparking\socket\constant\Constant.class
+com\dchip\cloudparking\socket\utils\RedisKeyUtil.class
+com\dchip\cloudparking\socket\constant\Constant$ValueAndExplian.class
+com\dchip\cloudparking\socket\utils\HashKit.class
+com\dchip\cloudparking\socket\controller\WebSocketController.class
+com\dchip\cloudparking\socket\constant\Constant$DeviceOnlineSituation.class
+com\dchip\cloudparking\socket\utils\StrKit.class
+com\dchip\cloudparking\WebSocketConfig.class
+com\dchip\cloudparking\WebSocket.class
+com\dchip\cloudparking\socket\constant\Constant$CommandType.class
+com\dchip\cloudparking\socket\utils\RetKit.class
+com\dchip\cloudparking\SocketBoot.class

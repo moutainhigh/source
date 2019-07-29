@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+<style type="text/css">
+.layui-form-radio{margin: 6px -18px 6px 20px;}
+.layui-input, .layui-textarea {display:inline-block;}
+.red{color:red}
+</style>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+	 <table class="layui-hide" id="lockCommandModelTable" lay-filter="lockCommandModelTable"></table>
+     </div>
+</div>
+
+<script th:inline="javascript">
+		var i18n = [[${#request.getAttribute("i18n")}]];
+	</script>
+<script>
+	requirejs([contextPath+'/js/lockCommand/lockCommand.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+<style type="text/css">
+#startTime{width:135px;height:30px;padding: 0px 15px;}
+#endTime{width:135px;height:30px;padding: 0px 15px;}
+.apply{height: 35px;margin-top: -3px;margin-left: 10px;}
+#withdrawSearch{display: inline-block;margin-left: 10px;}
+</style>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+		<div class="layui-form" id="companyName">
+		    <div class="layui-form-item" style="display: inline-block;">
+				<label class="layui-form-label" id="withdrawCompanyName">公司名称</label>
+	        	<div class="layui-input-block">
+	        		<input type="text" name="searchFinanceCompany" id="searchFinanceCompany" placeholder="请填写公司名称" class="layui-input" autocomplete="off">
+				</div>
+			</div>
+			<div id="withdrawSearch" class="layui-btn">搜索</div>
+			<div id="exportExcel" class="layui-btn">导出</div>
+        </div>            
+        <table class="layui-hide" id="withdrawTable" lay-filter="withdrawTable"></table>
+    </div>
+</div>
+
+<script th:inline="javascript">
+	var i18n = [[${#request.getAttribute("i18n")}]];
+	var companyName = [[${#request.getAttribute("companyName")}]]; //公司列表
+	var type = [[${#request.getAttribute("type")}]]; 
+    requirejs([contextPath + '/js/order/withdraw.js?v=' + (new Date()).getTime()]);
+</script>
+<div id="showBillDetail" style="display: none;">
+    <div class="setting-frame-content">
+    <div id="exportExcelCompany" class="layui-btn">导出</div>
+		<div class="form-group">
+        	<table class="layui-hide" id="billDetailTable" lay-filter="billDetailTable"></table>
+        </div>
+    </div>
+</div>	
+</body>
+
+</html>

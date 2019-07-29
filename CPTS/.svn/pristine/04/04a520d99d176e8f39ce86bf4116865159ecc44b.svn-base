@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+</head>
+<body>
+<div class="setting-frame-content">
+
+	<table class="layui-hide" id="loginLogTable" lay-filter="loginLogTable"></table>  
+	
+</div>
+<script th:inline="javascript">
+	requirejs([contextPath+'/js/loginLog/loginLog.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

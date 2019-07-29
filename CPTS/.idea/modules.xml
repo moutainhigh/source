@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/CPTS.iml" filepath="$PROJECT_DIR$/.idea/CPTS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.dchip.cloudparking.api/com.dchip.cloudparking.api.iml" filepath="$PROJECT_DIR$/com.dchip.cloudparking.api/com.dchip.cloudparking.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.dchip.cloudparking.eureka-server/com.dchip.cloudparking.eureka-server.iml" filepath="$PROJECT_DIR$/com.dchip.cloudparking.eureka-server/com.dchip.cloudparking.eureka-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.dchip.cloudparking.ribbon/com.dchip.cloudparking.ribbon.iml" filepath="$PROJECT_DIR$/com.dchip.cloudparking.ribbon/com.dchip.cloudparking.ribbon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.dchip.cloudparking.socket/com.dchip.cloudparking.socket.iml" filepath="$PROJECT_DIR$/com.dchip.cloudparking.socket/com.dchip.cloudparking.socket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.dchip.cloudparking.web/com.dchip.cloudparking.web.iml" filepath="$PROJECT_DIR$/com.dchip.cloudparking.web/com.dchip.cloudparking.web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.dchip.cloudparking.wechat/com.dchip.cloudparking.wechat.iml" filepath="$PROJECT_DIR$/com.dchip.cloudparking.wechat/com.dchip.cloudparking.wechat.iml" />
+    </modules>
+  </component>
+</project>

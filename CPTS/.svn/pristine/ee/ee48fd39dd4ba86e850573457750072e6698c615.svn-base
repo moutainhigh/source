@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+		<div class="layui-input-inline">
+		<input type="text" name="VersionNum" id="VersionNum" lay-verify="searchManageVersion" autocomplete="off" placeholder="请输入版本号" class="layui-input">
+	 	</div>
+	 	<div id="searchVersion" class="layui-btn" >搜索</div>
+	 	<div id="addVersion" class="layui-btn" >添加版本</div>
+		<table class="layui-hide" id="versionRuleTable" lay-filter="versionRuleTable"></table>
+	</div>
+</div>
+<form id="Form" method="post" action="" role="form" >
+	<div id="showVersionContent" style="display: none;">
+		<!-- 内容显示区域start -->
+		<div class="layuiWindownContent">
+			<div class="layui-form font-num-6" lay-filter="versionFrom">
+				<div class="layui-form-item">
+					<label class="layui-form-label" id="versionNumber">版本号<font color="red">*</font></label>
+					<div class="layui-input-block">
+						<input type="text" id="versionCode" name="versionCode" placeholder="请填写版本号" autocomplete="off" class="layui-input" oninput="if(value.length>30)value=value.slice(0,30)" >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" id="versionType">终端类型</label>
+					<div class="layui-input-block">
+						<select id="type" name="type" lay-filter="type">
+							<option value="100">普通道闸</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+				    <label class="layui-form-label" id="updateTime">下载更新时间</label>
+				    <div class="layui-input-block">
+				      <input type="radio" name="updateType" value="1" title="立即更新" checked>
+				      <input type="radio" name="updateType" value="2" title="凌晨更新" >
+				    </div>
+	  			</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" id="versionRemark">备注</label>
+					<div class="layui-input-block">
+						<input type="text" id="remark" name="remark" placeholder="请填写备注" autocomplete="off" class="layui-input" >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" id="document">安装文件 <font color="red">*</font></label>
+					<div class="layui-input-block">
+				        <!-- http://pchou.qiniudn.com/qiniutool/uptoken.html -->
+				        <input id="userfile" name="file" type="file" style="opacity:0;position: absolute;left: 0px;top: 0px;width: 96%;cursor: pointer;"/>			
+						<input type="text" id="address" name="address" placeholder="允许上传后缀名为.apk或.tar.bz2的文件！" autocomplete="off" class="layui-input" >
+						<input type="hidden"  id="submitAddress" name="submitAddress" ><!-- 上传到七牛云后返回的文件名称 -->
+	                </div>
+				</div>
+			</div>
+			<div class="layui-form-item" style="display:none"  id="progressFlag">
+				<label class="layui-form-label">上传进度</label>
+				<label class="layui-form-label" id="prog" style="text-align:left;"></label>
+			</div>
+		</div>
+		<!-- 内容显示区域end -->
+	</div>
+</form>
+<script th:inline="javascript">
+		var i18n = [[${#request.getAttribute("i18n")}]];
+	    var domain = [[${#request.getAttribute("domain")}]]; // 七牛云domain
+	    var bucketZone =  [[${#request.getAttribute("bucketZone")}]]; // 七牛云bucket-zone
+	    var token =[[${#request.getAttribute("token")}]];
+	    
+	    var versionCode100 = [[${#request.getAttribute("versionCode100")}]]; // type为100 最新版本
+</script>
+<script th:inline="javascript">
+	requirejs([contextPath+'/js/version/version.js?v='+(new Date()).getTime()]);
+	requirejs([contextPath+'/thirdplugin/qiniuUpload.js?v='+(new Date()).getTime()]); 
+</script>
+</body>
+</html>

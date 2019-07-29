@@ -1,0 +1,61 @@
+ <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="_csrf" th:attr="content=${_csrf.token}" />
+	<meta name="_csrf_header" th:attr="content=${_csrf.headerName}"/>
+	<title>云停车平台</title>
+</head>
+
+<style type="text/css">
+	#mapDiv{width: calc(96.5%); height: 500px;border-radius: 20px;margin-left: 20px;}
+	#homepageMap{width: 100%; height: 100%;box-shadow: 1px 1px 10px 2px rgba(147, 147, 147, 0.4);
+	border: 2px solid #ebebeb;vertical-align: middle;border-radius: 10px;}
+	.charts{box-shadow: 1px 1px 10px 2px rgba(147, 147, 147, 0.4);width: calc(46%); height: 30%;
+	display: inline-block;background-color: white;border-radius: 15px;margin-top: 30px;margin-left: 20px;}
+	.parkingMemberEchart{box-shadow: 1px 1px 10px 2px rgba(147, 147, 147, 0.4);width: calc(46%); 
+	height: 30%;display: inline-block;background-color: white;border-radius: 15px;margin-top: 30px;margin-left:5%;}
+	.parkingIncomeEchart{box-shadow: 1px 1px 10px 2px rgba(147, 147, 147, 0.4);width: calc(46%); 
+	height: 30%;display: inline-block;background-color: white;border-radius: 15px;margin-top: 30px;margin-left: 20px;}
+	.cardIncomeEchart{box-shadow: 1px 1px 10px 2px rgba(147, 147, 147, 0.4);width: calc(46%); 
+	height: 30%;display: inline-block;background-color: white;border-radius: 15px;margin-top: 30px;margin-left:5%;}
+	#userMemberEcharts{display: inline-block;width: calc(100%); height: 350px;}
+	#parkingIncome{display: inline-block;width: calc(100%); height: 350px;}
+	#parkingMemberEcharts{display: inline-block;width: calc(100%); height: 350px;}
+	#cardIncome{display: inline-block;width: calc(100%); height: 350px;}
+	.anchorBL{display:none;}
+	/* .user{margin-top: 15px;margin-bottom: -24px;margin-left: 40px;display: inline-block;width:45%;height:40px;}
+	.parking{display: inline-block;width:45%;height:40px;margin-top: 15px;margin-bottom: -24px;margin-left: 60px;}
+	.explain{margin-bottom: -24px;} */
+</style>
+
+<body>
+	<h1 class="map" th:text="#{login.distributionMap}">停车场分布图</h1>
+	<div id="mapDiv">
+		<div id="homepageMap"></div>
+	</div>
+	<div class="charts none">
+		<div id="userMemberEcharts"></div>
+	</div>
+	<div class="parkingMemberEchart none">
+		<div id="parkingMemberEcharts"></div>
+	</div>
+	<div class="parkingIncomeEchart none">
+		<div id="parkingIncome"></div>
+	</div>
+	<div class="cardIncomeEchart none">
+		<div id="cardIncome"></div>
+	</div>
+	<script th:inline="javascript">
+		var i18n1 = [[${#request.getAttribute("i18n1")}]];
+		console.log(i18n1)
+		points = [[${points}]];	
+		type = [[${type}]];	
+		companyId = [[${companyId}]];
+	</script>	
+	<script th:inline="javascript">
+		requirejs([contextPath+'/js/homepage.js?v='+(new Date()).getTime()]);
+	</script>
+</body>
+</html>

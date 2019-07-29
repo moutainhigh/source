@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+ <style type="text/css">
+  .search {display: inline-block;margin-left: 10px;}
+  .red {color: red}
+ </style>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="setting-frame-content">
+		<div class="form-group">
+			<div class="layui-form" style="display: inline-block;">
+				<div class="layui-form-item" style="display: inline-block;">
+					<label class="layui-form-label" id="paekingUserName">用户账户</label>
+					<div class="layui-input-block">
+						<input type="text" class="layui-input" id="userAccount" name="userAccount" placeholder="请输入登录账号" autocomplete="off">
+					</div>
+				</div>
+			<div id="searchUserAccount" class="layui-btn search">搜索</div>
+		    <div id="addUserAccount" class="layui-btn" style="display: inline-block;">添加用户</div>
+	    	</div>
+		    <table class="layui-hide" id="ParkingUserTable" lay-filter="ShowUserAccountTable"></table>
+		    <script type="text/html" id="UserTableBar">
+				<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="reset">重置</a>
+  				<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+			</script>
+		</div>
+	</div>
+</div>
+<script th:inline="javascript">
+var i18n = [[${#request.getAttribute("i18n")}]];
+    var parkingIdStr = [[${#request.getAttribute("parkingId")}]]
+    console.log(parkingIdStr)
+</script>
+<script>
+    requirejs([contextPath + '/js/parkingUser/parkingUser.js?v=' + (new Date()).getTime()]);
+</script>
+<div id="showAccountContent" style="display: none;">
+    <!-- 内容显示区域start -->
+    <div class="layuiWindownContent">
+        <div class="layui-form" lay-filter="accountFrom">
+            <div class="layui-form-item" style="display: none;">
+                <label class="layui-form-label">用户id</label>
+                <div class="layui-input-block">
+                    <input type="text" id="ParkingAccountID" name="ParkingAccountID" placeholder="请填写用户id" autocomplete="off"
+                        class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="red">* </span>登录账号</label>
+                <div class="layui-input-block">
+                    <input type="text" id="userName" name="userName" placeholder="请填写登录账号（手机号码）" autocomplete="off"
+                        class="layui-input">
+            </div>
+            <div  class="layui-col-md-offset3 layui-word-aux">（登录账号需填写手机号码）</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="red">* </span>真实姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" id="AccountRealName" name="AccountRealName" placeholder="请填写真实姓名" autocomplete="off"
+                        class="layui-input">
+                </div>
+           </div>
+            <div class="layui-form-item" id="ParkingUSerPW">
+                <label class="layui-form-label">初始密码</label>
+                <div class="layui-input-block">
+                    <input type="text" id="pwd" name="pwd" placeholder="默认密码123456" autocomplete="off"
+                        class="layui-input" disabled>
+                </div>
+            </div>
+            <div class="layui-form-item" id="parkingUSerChoseParking">
+                <label class="layui-form-label">所属停车场</label>
+                <div class="layui-input-block" >
+                    <select id="parkingUSerGetAllParking" name="parkingUSerGetAllParking" lay-filter="parkingUSerGetAllParking" lay-verify="parkingUSerGetAllParking"></select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="red">* </span>用户类型</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="accountUserType" value="1" lay-filter="AccountUserType" title="商户" checked="checked">
+                    <input type="radio" name="accountUserType" value="2" lay-filter="AccountUsertType" title="保安">
+                </div>
+            </div>
+<!--             <div class="layui-form-item none" id="showAccountUserRoleSel">
+           		<label class="layui-form-label">选择角色</label>
+           		<div class="layui-input-block">
+           			<select name="AccountUserRoleSel" id="AccountUserRoleSel" lay-filter="AccountUserRoleSel">
+           			</select>
+           		</div>
+            </div>
+            <div class="layui-form-item none" id="showAccountCompanySel">
+            	<label class="layui-form-label">所属公司</label>
+            	<div class="layui-input-block">
+            		<select name="accountCompanySel" id="accountCompanySel" lay-filter="accountCompanySel">
+            		</select>
+            	</div>
+            </div> -->
+        </div>
+    </div>
+    <!-- 内容显示区域end -->
+</div>
+</body>
+</html>

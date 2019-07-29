@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>CPTS</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta name="msapplication-TileColor" content="#3399cc" />
+<link rel="stylesheet" th:href="@{wechat/css/weui.min.css?v=3.15}" />
+<link rel="stylesheet" th:href="@{wechat/css/jquery-weui.min.css}"  />
+<link rel="stylesheet" th:href="@{wechat/css/showOpenIndex.css}" />
+<style>
+	body { background-color: #fbfbfb; }
+	.weui-form-preview__bd { color: #333; font-size: 1em; }
+	.weui-icon-success { color: #09bd88; }
+	.show-company-name { text-align: center; margin-top: 22px; font-size: 24px; color: #006fc7; font-weight: bold; }
+</style>  
+</head>
+<body>
+	<div class="show-pay-box" id="noPayshowBox">
+		<!-- <div class="show-company-name" id="showCompanyName"></div> -->
+		<div class="show-logo-box">
+			<i class="index-logo"></i>
+		</div>
+		<div class="show-title-box" style="padding-left: 20px;">欢迎光临</div>
+		<div class="weui-form-preview">
+		  <div class="weui-form-preview__bd">
+		    <div class="weui-form-preview__item">
+		      <label class="weui-form-preview__label">停车场名称</label>
+		      <span class="weui-form-preview__value" id="showParkName"></span>
+		    </div>
+		    <div class="weui-form-preview__item">
+		      <label class="weui-form-preview__label">免费时长</label>
+		      <span class="weui-form-preview__value" id="showFreeTimeLength"></span>
+		    </div>
+		    <div class="weui-form-preview__item">
+		      <label class="weui-form-preview__label">每小时收费</label>
+		      <span class="weui-form-preview__value" id="showHourCost"></span>
+		    </div>
+		    <div class="weui-form-preview__item">
+		      <label class="weui-form-preview__label">入场时间</label>
+		      <span class="weui-form-preview__value" id="showParkDate"></span>
+		    </div>
+		  </div>
+		</div>
+		<div class="show-input-num-box">
+			<div class="weui-cells weui-cells_form">
+			    <div class="weui-cell">
+			    	<div class="weui-cell__hd"><label class="weui-label">车牌号码</label></div>
+			    	<div class="weui-cell__bd">
+			      		<input class="weui-input" type="text" id="licensePlateInp" onkeyup="toUpperCase(this)"  maxlength="10"  placeholder="请输入车牌号码">
+			    	</div>
+			  	</div>
+			</div>	
+			<div class="show-btn-box">
+				<div class="weui-btn weui-btn_primary cursor-pointer" id="openBrakeBtn">开闸</div>
+		</div>
+	</div>
+	<!-- 显示操作成功 start -->
+	<div class="weui-msg" id="showSuccessContent">
+	  <div class="weui-msg__opr-area">
+	    <p class="weui-btn-area">
+	      <a href="javascript:;" class="weui-btn weui-btn_primary" id="closeWindows">关闭</a>
+	    </p>
+	  </div>
+	  <div class="show-download-box">
+		  <div class="show-logo-box">
+				<i class="cpts-download-icon"></i> 
+		  </div>
+		  <div class="show-download-font">
+		  	长按扫码下载CPTS app享有更多优惠
+		  </div>
+	  </div>
+	</div>
+	<!-- 显示操作成功 end -->
+	<script th:inline="javascript">
+		contextPath = [[${ #request.getContextPath() }]];
+		    var freeTimeLength = [[${freeTimeLength}]];
+		    var hourCost = [[${hourCost}]];
+			var parkDate = [[${parkDate}]];
+			var companyName = [[${companyName}]];
+			var parkName = [[${parkName}]];
+			var roadWayId = [[${roadWayId}]];
+			var parkinginfoId = [[${#request.getAttribute("parkinginfoId")}]];
+			//小写转大写方法
+			 function toUpperCase(obj)
+			 {
+			 	obj.value = obj.value.toUpperCase()
+			 }
+	
+			//document.getElementById("showCompanyName").innerHTML = companyName;
+	</script>
+	<script th:src="@{/wechat/thirdplugin/require.js}"></script>
+	<script>
+		requirejs([contextPath +'/wechat/thirdplugin/common.js?v='+(new Date()).getTime()]);
+		requirejs([contextPath + '/wechat/js/unlicensedEntryPage.js?v='+(new Date()).getTime()]);
+	</script>
+</body>
+</html>

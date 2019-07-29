@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>CPTS</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta name="msapplication-TileColor" content="#3399cc" />
+
+</head>
+<body>
+	<div class="show-logo-box">
+		<i class="index-logo"></i>
+	</div>
+	<div class="show-title-box">
+		欢迎使用CPTS，点击下方按钮即可入库停车(一车一杆，请注意保持距离)
+	</div>
+	<div class="show-open-btn">
+		<div class="weui-btn weui-btn_primary">打开闸门</div>
+	</div>
+	
+	<script th:inline="javascript">
+		var openid = [[${openid}]]; //用户openid 
+	</script>
+	<script>
+		requirejs(['../wechat/js/showOpenIndex.js?v='+(new Date()).getTime()]);
+	</script>
+</body>
+</html>

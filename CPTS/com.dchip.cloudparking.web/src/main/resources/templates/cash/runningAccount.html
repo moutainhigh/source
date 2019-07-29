@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+</head>
+<body>
+
+<div class="setting-frame-content">
+    <div class="form-group">
+        <table class="layui-hide" id="cashTable" lay-filter="cashTable"></table>
+    </div>
+</div>
+<script th:inline="javascript">
+var i18n = [[${#request.getAttribute("i18n")}]];
+</script>
+<script>
+     /* var contextPath =[[${#request.getContextPath()}]];  //全局项目 路径,不需要重新定义
+     var roadwayList = [[${#request.getAttribute("roadwayList")}]];
+     var parkingId = [[${#request.getAttribute("parkingId")}]];
+     console.log(roadwayList) */
+	requirejs([contextPath+'/js/cash/runningAccount.js?v='+(new Date()).getTime()]);
+</script>
+
+</body>
+</html>

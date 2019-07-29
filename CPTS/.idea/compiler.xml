@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="com.dchip.cloudparking.api" />
+        <module name="com.dchip.cloudparking.eureka-server" />
+        <module name="com.dchip.cloudparking.ribbon" />
+        <module name="com.dchip.cloudparking.socket" />
+        <module name="com.dchip.cloudparking.web" />
+        <module name="com.dchip.cloudparking.wechat" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="com.dchip.cloudparking.api" target="1.8" />
+      <module name="com.dchip.cloudparking.eureka-server" target="1.8" />
+      <module name="com.dchip.cloudparking.ribbon" target="1.8" />
+      <module name="com.dchip.cloudparking.socket" target="1.8" />
+      <module name="com.dchip.cloudparking.web" target="1.8" />
+      <module name="com.dchip.cloudparking.wechat" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="com.dchip.cloudparking.api" options="-parameters" />
+      <module name="com.dchip.cloudparking.eureka-server" options="-parameters" />
+      <module name="com.dchip.cloudparking.ribbon" options="-parameters" />
+      <module name="com.dchip.cloudparking.socket" options="-parameters" />
+      <module name="com.dchip.cloudparking.web" options="-parameters" />
+      <module name="com.dchip.cloudparking.wechat" options="-parameters" />
+    </option>
+  </component>
+</project>

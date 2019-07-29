@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+ <style type="text/css">
+	.box{ margin: 21px; border: 2px solid #eee; border-radius: 5px; }
+	.layui-form-item { margin-top: 15px; margin-right: 10px; }
+	.layuiWindownContent { width: auto; }
+	.red { color: red }
+	.mac {width: 96px;padding: 9px 0px 6px 0px;}
+	.applyType{padding: 9px 14px;letter-spacing: 2px;}
+	.ip{letter-spacing: 2px;width: 92px;padding: 9px 2px;}
+ </style>
+</head>
+
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+	
+	 <div class="layui-form" style="display: inline-block;">
+	   <div class="layui-form-item" style="display: inline-block;">
+	     <label class="layui-form-label">MAC名称</label>
+	     <div class="layui-input-block">
+	       <input type="text" name="searchMAC" id="searchMAC" autocomplete="off" placeholder="请输入MAC名称" class="layui-input">
+	     </div>
+	   </div>
+	   <div id="searchEquipment" class="layui-btn search">搜索</div>
+	 </div>
+	 <table class="layui-hide" id="equipmentTable" lay-filter="equipmentTable"></table>	   		  
+	 <!-- <a class="layui-btn layui-btn-xs" lay-event="update">通知更新</a> -->
+	 <script type="text/html" id="equipmentBar">
+ 		  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> 
+  		  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	  </script>
+	 <script>
+		requirejs([contextPath+'/js/equipment/equipment.js?v='+(new Date()).getTime()]);
+	 </script>
+ </div>
+</div>
+
+<!-- 弹出层的内容start -->
+<div id="mainControllerEdit" style="display: none;">
+	<!-- 内容显示区域start -->
+	<div class="layuiWindownContent">
+	<div class="layui-form">
+		<div class="layui-form-item">
+		    <label class="layui-form-label"><span class="red">* </span>所属停车场</label>
+		    <div class="layui-input-block">
+		      <select name="selMCParking" id="selMCParking" lay-filter="selMCParking" lay-search="">
+		      </select>
+		    </div>
+		 </div>
+		 <div class="layui-form-item">
+		 	<label class="layui-form-label applyType"><span class="red">* </span>作用类型</label>
+		 	<div class="layui-input-block">
+			    <input type="checkbox" name="actionType" value="1" lay-skin="primary" title="道闸"/>
+			    <input type="checkbox" name="actionType" value="2" lay-skin="primary" title="地锁"/>
+			    <input type="checkbox" name="actionType" value="3" lay-skin="primary" title="地磁"/>
+			    <input type="checkbox" name="actionType" value="4" lay-skin="primary" title="超声波"/>
+		    </div>
+		 </div>
+		 <div class="layui-form-item">
+		    <div class="layui-input-block">
+		      <div id="addRoadway" class="layui-btn" >添加车道</div>
+		      <div id="deleteRoadway" class="layui-btn" >删除车道</div>
+		    </div>
+		 </div>
+	  
+	  	 <div id="roadwayHead">	  	  
+			  <div class="layui-form-item">
+			    <label class="layui-form-label applyType">选择车道</label>
+			    <div id="roadways" class="layui-input-block">
+			     <!--  <input type="radio" name="roadway" value="0" title="车道" > -->
+			    </div>
+			  </div>
+			  
+		<!-- 	  <div class="layui-form-item">
+			    <label class="layui-form-label">启用的车道</label>
+			    <div class="layui-input-block">
+			      <input type="checkbox" name="like[roadway1]" title="车道1" checked>
+			      <input type="checkbox" name="like[roadway2]" title="车道2" checked>
+			      <input type="checkbox" name="like[roadway3]" title="车道3">	      
+			      <input type="checkbox" name="like[roadway4]" title="车道4">
+			      <input type="checkbox" name="like[roadway5]" title="车道5">
+			      <input type="checkbox" name="like[roadway6]" title="车道6">
+			    </div>
+			  </div> -->
+		 </div>
+	  
+	  <div id="roadwayInfo" class="box">
+		  
+		  <div class="layui-form-item"> 
+		    <label class="layui-form-label ip">车道名称</label>
+		    <div class="layui-input-block">
+		      <input id="roadwayName" type="text" name="title" required  lay-verify="required"  placeholder="请输入车道名称" autocomplete="off" class="layui-input listened-input">
+		    </div>
+		  </div>
+		  
+		  <div class="layui-form-item">
+		    <label class="layui-form-label ip">闸机机号</label>
+		    <div class="layui-input-block">
+		      <input id="gateNumber" type="text" name="title" required  lay-verify="required" placeholder="请输入闸机机号" autocomplete="off" class="layui-input listened-input">
+		    </div>
+		  </div>
+		  
+		  <div class="layui-form-item">
+		    <label class="layui-form-label ip">闸机位置</label>
+		    <div class="layui-input-block">
+		      <input id="address" type="text" name="title" required  lay-verify="required" placeholder="请输入闸机地址" autocomplete="off" class="layui-input listened-input">
+		    </div>
+		  </div>
+		  
+		  <div class="layui-form-item">
+		    <label class="layui-form-label ip"><label class="red">* </label>摄像机ip</label>
+		    <div class="layui-input-block">
+		      <input id="cameraIp" type="text" name="title" required  lay-verify="required" placeholder="请输入摄像机ip，例：192.168.0.10" autocomplete="off" class="layui-input listened-input">
+		    </div>
+		  </div>
+		  
+<!-- 		  <div class="layui-form-item">
+		    <label class="layui-form-label">LED屏ip</label>
+		    <div class="layui-input-block">
+		      <input type="text" name="title" required  lay-verify="required" placeholder="请输入LED屏的ip" autocomplete="off" class="layui-input">
+		    </div>
+		  </div> -->
+		  
+		  <div class="layui-form-item">
+		    <label class="layui-form-label mac"><label class="red">* </label>摄像机mac</label>
+		    <div class="layui-input-block">
+		      <input id="cameraMac" type="text" name="title" required  lay-verify="required" placeholder="请输入摄像机mac" autocomplete="off" class="layui-input listened-input">
+		    </div>
+		  </div>
+	
+		  
+		<!--   <div class="layui-form-item">
+		    <label class="layui-form-label">语音与LED</label>
+		    <div class="layui-input-block">
+		      <input type="checkbox" name="switch" lay-skin="switch">
+		    </div>
+		  </div> -->
+		  
+		  <div class="layui-form-item">
+		    <label class="layui-form-label"><label class="red">* </label>出入口标记</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="port" lay-filter="port" value="1" title="入口">
+		      <input type="radio" name="port" lay-filter="port" value="2" title="出口" >
+		    </div>
+		  </div>
+		  
+<!-- 		  <div class="layui-form-item">
+		    <label class="layui-form-label">停车场规模</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="scale" value="1" title="大">
+		      <input type="radio" name="scale" value="2" title="中" >	      
+		      <input type="radio" name="scale" value="3" title="小">
+		    </div>
+		  </div> -->
+		  
+		  <!-- <div class="layui-form-item">
+		    <label class="layui-form-label">LED卡型号</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="ledModel" value="1" title="A款">
+		      <input type="radio" name="ledModel" value="2" title="B款" >	      
+		      <input type="radio" name="ledModel" value="3" title="C款">
+		    </div>
+		  </div> -->
+		  
+		  <div class="layui-form-item">
+		    <label class="layui-form-label"><label class="red">* </label>摄像机型号</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="cameraModel" lay-filter="model" value="1" title="A款" >
+		      <input type="radio" name="cameraModel" lay-filter="model" value="2" title="B款" >
+		      <input type="radio" name="cameraModel" lay-filter="model" value="3" title="C款" >
+		    </div>
+		  </div>
+		  
+		<!--   <div class="layui-form-item">
+		    <label class="layui-form-label">LED屏行数</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="screen" value="1" title="1行屏">
+		      <input type="radio" name="screen" value="2" title="2行屏" >	      
+		      <input type="radio" name="screen" value="4" title="4行屏">
+		    </div>
+		  </div> -->
+		  
+		 <!--  <div class="layui-form-item">
+		    <label class="layui-form-label">LED通讯方式</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="communication" value="1" title="RS485" checked>
+		    </div>
+		  </div> -->
+		  
+		 <!--  <div class="layui-form-item">
+		    <label class="layui-form-label">显示方式</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="show" value="1" title="横屏">
+		      <input type="radio" name="show" value="2" title="竖屏" >	
+		    </div>
+		  </div> -->
+	  
+	  </div>
+	  
+	</div>
+	</div>
+	<!-- 内容显示区域end -->
+</div>
+<!-- 弹出层的内容end -->
+</body>
+</html>

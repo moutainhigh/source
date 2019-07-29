@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+<style type="text/css">
+.layui-form-radio{margin: 6px -18px 6px 20px;}
+.layui-input, .layui-textarea {display:inline-block;}
+.red{color:red}
+.groundLock{padding: 9px 5px; width: 100px;}
+.lock{width: 109px;padding: 9px 1px 10px 0px;margin-left: -12px;}
+</style>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+	<div class="layui-form" style="display: inline-block;">
+	   <div class="layui-form-item" style="display: inline-block;">
+	     <label class="layui-form-label groundLock" id="groundUid">地锁唯一识别码</label>
+	     <div class="layui-input-block">
+	       <select class="select" id="searchUId" name="searchUId" lay-filter="searchUId" lay-search="">
+		   </select>
+	     </div>
+	   </div>
+	   <div id="searchGroundLock" class="layui-btn search" >搜索</div>
+       <!-- <div id="addGroundLockModel" class="layui-btn">添加地锁</div> -->
+</div>
+	 <table class="layui-hide" id="groundLockModelTable" lay-filter="groundLockModelTable"></table>
+	 <script type="text/html" id="groundLockTableBar">
+  		  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+		  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	    </script>
+	    <script type="text/html" id="groundLockTableBarEnglish">
+  		  <a class="layui-btn layui-btn-xs" lay-event="edit">Edit</a>
+		  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">Del</a>
+	    </script>
+     </div>
+</div>
+
+<!-- 弹出层的内容start -->
+<div id="showGroundLockDetail" style="display: none;">
+	<!-- 内容显示区域start -->
+	<div class="layuiWindownContent">
+	<div class="layui-form"> 
+  	  <div id="mainControlChose">	  	  
+		  <div class="layui-form-item" >
+		    <label class="layui-form-label" id="choseMainControl"><span class="red" >* </span>选择主控板</label>
+		    <div class="layui-input-block">
+				<select class="select" id="selectMainControl" name="selectMainControl" lay-filter="selectMainControl" lay-search="">
+				</select>
+			</div>
+		  </div>
+	  </div>
+	  
+	  <div id="groundLockUIdChose">	  	  
+		  <div class="layui-form-item">
+		    <label class="layui-form-label lock" id="lockUid"><span class="red">* </span>地锁唯一识别码</label>
+		    <div class="layui-input-block">
+				<input id="groundLockUIdPut" type="text" name="title" required  lay-verify="required"  placeholder="地锁唯一识别码" autocomplete="off" class="layui-input listened-input" disabled>
+			</div>
+		  </div>
+	  </div>
+	  
+	  <div id="InPutLicensePlate" class="box">
+		  <div class="layui-form-item"> 
+		    <label class="layui-form-label" id="LicensePlate"><span class="red">* </span>车牌号码</label>
+		    <div class="layui-input-block">
+		      <input id="lockLicensePlate" type="text" name="title" required  lay-verify="required"  placeholder="请输入车牌号码" autocomplete="off" class="layui-input listened-input" >
+		    </div>
+		  </div>
+	  </div>
+	  
+	</div>
+	</div>
+	<!-- 内容显示区域end -->
+</div>
+<!-- 弹出层的内容end -->
+<script th:inline="javascript">
+	var i18n = [[${#request.getAttribute("i18n")}]];
+	var mainControlList = [[${#request.getAttribute("mainControlList")}]] //主控板列表
+	var groundLockUIdList = [[${#request.getAttribute("groundLockUIdList")}]]//唯一识别码列表
+</script>
+<script>
+	requirejs([contextPath+'/js/groundLock/groundLock.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

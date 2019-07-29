@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+<style type="text/css">
+.search{display: inline-block;margin-left: 10px;}
+.layui-form-radio{margin: 6px -18px 6px 20px;}
+.layui-input, .layui-textarea {display:inline-block;}
+.red{color:red}
+</style>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+		<div class="layui-form-item" style="display: inline-block;">
+			<label class="layui-form-label" id="recordUserName">用户名</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input" id="userCouponUserName" name="userCouponUserName" placeholder="请输入用户名" autocomplete="off">
+			</div>
+		</div>
+
+		<div class="layui-form-item" style="display: inline-block;">
+			<label class="layui-form-label" id="recordTime">日志时间</label>
+			<div class="layui-input-inline">
+				<input type="text" id="start_time" name="start_time" autocomplete="off" placeholder="请输入开始时间" class="layui-input">
+			</div>
+			<div class="layui-input-inline">
+				<input type="text" id="end_time" name="end_time" autocomplete="off" placeholder="请输入结束时间" class="layui-input">
+			</div>
+			<div class="layui-input-inline">
+			<div id="userCouponSearch" class="layui-btn search ">搜索</div>
+		</div>
+		</div>
+	 	<table class="layui-hide" id="activityRecordTable" lay-filter="activityRecordTable"></table>
+    </div>
+</div>
+<script th:inline="javascript">
+	var i18n = [[${#request.getAttribute("i18n")}]];
+</script>
+<script>
+	requirejs([contextPath+'/js/activityManage/record.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

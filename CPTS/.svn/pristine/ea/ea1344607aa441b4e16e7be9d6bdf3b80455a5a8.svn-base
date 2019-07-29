@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>CPTS</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta name="msapplication-TileColor" content="#3399cc" />
+<link rel="stylesheet" th:href="@{../wechat/css/weui.min.css?v=3.15}" />
+<link rel="stylesheet" th:href="@{../wechat/css/jquery-weui.min.css}"  />
+<link rel="stylesheet" th:href="@{../wechat/css/showOpenIndex.css}" />
+</head>
+<body>
+	<!-- loadPage所在区域 start -->
+	<div class="show-loadpage-box" id="showLoadPageBox">
+	</div>
+	<!-- loadPage所在区域 end -->
+	<script th:src="@{../wechat/thirdplugin/require.js}"></script>
+ 	<script th:inline="javascript">
+		contextPath = [[${#request.getContextPath()}]];
+	
+		var mapInfo = [[${mapInfo}]]; //获取jssdk必要参数
+		var openid = [[${openid}]]; //用户openid
+		var showFlag = [[${showFlag}]]; //跳转标志
+		var userId = [[${userId}]]; //用户id
+		var parkingInfoId = [[${parkingInfoId}]];
+		var type = [[${type}]];
+		var parkingId = [[${parkingId}]];  //停车场id
+		var roadWayId = [[${roadWayId}]];  //车道id 
+		
+		//删除微信内广告js代码 start
+		var del_times = 0, deTimer = null;
+		function adGo() {
+			var iframe = document.getElementsByTagName('iframe')[0];
+			if(iframe){
+				var bodyNode = {tagName:''}, iframeParent, targetNode = iframe.parentNode;
+				while (bodyNode.tagName != 'BODY'){
+					bodyNode = targetNode;
+					if(bodyNode.tagName != 'BODY'){
+						iframeParent = targetNode;
+						targetNode = targetNode.parentNode;
+					}
+				}
+				if(iframeParent) //如果iframe有父类
+					bodyNode.removeChild(iframeParent);
+				else
+					bodyNode.removeChild(iframe);
+			}
+			del_times++;
+			if (del_times > 10) window.clearInterval(deTimer)
+		}
+		
+		//抢先 删除 嵌入广告
+		(function(){adGo();}())
+		deTimer = self.setInterval(adGo, 200);
+		//删除微信内广告js代码 end
+		
+	</script>
+	<script th:src="@{../wechat/thirdplugin/require.js}"></script>
+	<script th:inline="javascript">
+		requirejs(['../wechat/thirdplugin/common'],function(common){
+			 requirejs(['../wechat/js/showWeChatIndex']);
+		});
+	</script>
+</body>
+</html>

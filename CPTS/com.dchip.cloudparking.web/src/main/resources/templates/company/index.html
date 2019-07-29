@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+<style type="text/css">
+.red {vertical-align: sub;color: #f50909;}
+.bankHolder {    
+	width: 100px;
+    padding: 9px 15px;
+    display: inline-block;
+    margin-left: -20px;
+ }
+</style>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+		<div class="layui-form" style="display: inline-block;">
+			<div class="layui-form-item" style="display: inline-block;">
+				<label class="layui-form-label" id='operaCompanyName'>公司名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="searchCompanyName" id="searchCompanyName" autocomplete="off" placeholder="请输入公司名称" class="layui-input">
+				</div>
+			</div>
+			<div id="searchCompanyTo" class="layui-btn search">搜索</div>
+			<div id="addCompany" class="layui-btn">添加公司</div>
+		</div>
+		
+		<table class="layui-hide" id="companyTable" lay-filter="companyTable"></table>
+		<script type="text/html" id="companyTableBar">
+  		  	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  		  	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	  	</script>
+	  	<script type="text/html" id="companyTableBarEnglish">
+  		  	<a class="layui-btn layui-btn-xs" lay-event="edit">Edit</a>
+  		  	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">Del</a>
+	  	</script>
+	</div>
+</div>
+	<div id="showCompanyDetail" style="display: none;">
+		<!-- 内容显示区域start -->
+		<div class="layuiWindownContent">
+			<div class="layui-form" lay-filter="companyFrom">
+				<div class="layui-form-item">
+					<label class="layui-form-label" id="companyName"><span class="red">* </span>公司名称</label>
+					<div class="layui-input-block">
+						<input type="text" id="name" name="name"
+							lay-verify="name" autocomplete="off" class="layui-input"
+							placeholder="请填写公司名称" maxlength="20">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" id="corporateLegalPerson"><span class="red">* </span>公司法人</label>
+					<div class="layui-input-block">
+						<input type="text" id="legalPerson" name="legalPerson"
+							lay-verify="legalPerson" autocomplete="off" class="layui-input"
+							placeholder="请填写公司法人" maxlength="10">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" id="contactNumber"><span class="red">* </span>联系电话</label>
+					<div class="layui-input-block">
+						<input type="text" id="tel" name="tel"
+							lay-verify="tel" autocomplete="off" class="layui-input"
+							placeholder="请填写公司联系电话">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" id="BankCardNumber"><span class="red">* </span>银行卡账号</label>
+					<div class="layui-input-block">
+						<input type="text" id="bankCard" name="bankCard"
+							lay-verify="bankCard" autocomplete="off" class="layui-input"
+							placeholder="请填写银行卡账号" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label bankHolder" id="bankHolder"><span class="red">* </span>银行卡持有人</label>
+					<div class="layui-input-block">
+						<input type="text" id="bankHolder" name="bankHolder"
+							lay-verify="bankHolder" autocomplete="off" class="layui-input"
+							placeholder="请填写银行卡持有人"
+							 oninput="if(value.length>9)value=value.slice(0,10)">
+					</div>
+				</div>
+				<div class="layui-form-item">
+				    <label class="layui-form-label" id="DefaultAccount">默认账号</label>
+				    <div class="layui-input-block">
+				      <input type="radio" name="isFirst" value="1" title="是/Yes" checked="">
+				      <input type="radio" name="isFirst" value="0" title="否/No">
+				    </div>
+				</div>
+				<div class="layui-form-item">
+				    <label class="layui-form-label" id="TransferWay">转账方式</label>
+				    <div class="layui-input-block">
+				      <input type="radio" name="balanceWay" value="1" title="支付宝/AliPay" checked="">
+				      <input type="radio" name="balanceWay" value="2" title="微信/Wechat">
+				    </div>
+				</div>
+				<div class="layui-form-item" id="setBankNum" style="display: none;">
+					<label class="layui-form-label">银行编号</label>
+					<div class="layui-input-block">
+						<input type="text" id="bankNum" name="bankNum"
+							lay-verify="bankNum" autocomplete="off" class="layui-input"
+							placeholder="请填写银行编号" readonly="readonly">
+					</div>
+				</div>
+				<div class="layui-form-item" id="setBankName" style="display: none;">
+					<label class="layui-form-label">银行名称</label>
+					<div class="layui-input-block">
+						<input type="text" id="bankName" name="bankName"
+							lay-verify="bankName" autocomplete="off" class="layui-input"
+							placeholder="请填写银行名称" readonly="readonly">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 内容显示区域end -->
+	</div>
+	<script th:inline="javascript">
+		var i18n = [[${#request.getAttribute("i18n")}]];
+	</script>
+	<script>
+	requirejs([contextPath+'/js/company/company.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

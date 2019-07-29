@@ -1,0 +1,17 @@
+@charset "UTF-8";
+/* 手机样式 start */
+body, html { width: 100%; height: 100%; margin: 0; font-family: "微软雅黑";}
+body,div { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
+body iframe { display: none; }
+.none { display: none!important; }
+.cursor-pointer { cursor: pointer; }
+/* 手机样式 end */
+.show-open-btn { margin: 100px 20px 0; }
+.show-pay-btn { margin: 100px 20px 0; }
+.show-logo-box .index-logo { position: absolute; width: 128px; height: 128px; top: 74px; left: calc(50% - 64px); border-radius: 5px; background-repeat: no-repeat; background-size: 100%; background-image: url(../images/index_logo_icon.png); }
+.show-title-box { margin-bottom: 10px; margin-top: 155px; margin-left: calc(50% - 55px); }
+/* 下载模块样式 start */
+.show-download-box { position: relative; }
+.show-logo-box .cpts-download-icon { position: absolute; width: 188px; height: 188px; top: 0px; left: calc(50% - 94px); background-repeat: no-repeat; background-size: 100%; }
+.show-download-font { margin-top: 190px; float: left; width: 150px; margin-left: calc(50% - 75px); font-size: 14px; }
+/* 下载模块样式 end */

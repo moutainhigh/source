@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>CPTS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta name="msapplication-TileColor" content="#3399cc" />
+<link rel="stylesheet" th:href="@{../wechat/css/weui.min.css?v=3.15}" />
+<link rel="stylesheet" th:href="@{../wechat/css/jquery-weui.min.css}"  />
+<link rel="stylesheet" th:href="@{../wechat/css/showOpenIndex.css}" />
+</head>
+<body>
+	<div class="show-pay-box" id="noPayshowBox">
+		<div class="show-company-name" id="showCompanyName"></div>
+		<div class="show-logo-box">
+			<i class="index-logo"></i> 
+		</div>
+		<div class="show-title-box">
+			欢迎使用CPTS
+		</div>
+		<div class="weui-msg">
+			<div class="weui-msg__text-area">
+				<h2 class="weui-msg__title">结账出场</h2>
+			</div>
+		</div>
+		<div class="show-input-num-box">
+			<div class="weui-cells weui-cells_form">
+			    <div class="weui-cell">
+			    	<div class="weui-cell__hd"><label class="weui-label">车牌号码</label></div>
+			    	<div class="weui-cell__bd">
+			      		<input class="weui-input" type="text" id="licensePlateInp" onkeyup="toUpperCase(this)" maxlength="10"  placeholder="请输入车牌号码">
+			    	</div>
+			  	</div>
+			</div>	
+			<div class="show-btn-box">
+				<div class="weui-btn weui-btn_primary cursor-pointer" id="reckoningBtn">查询</div>
+			</div>
+			<!-- 显示找不到该车牌的入场记录，请重新输入 -->
+			<div class="show-null-input none">
+				查不到该车入场记录，请检查车牌是否输入正确
+			</div>
+		</div>
+		<div class="show-details-pay-box none">
+			<div class="weui-form-preview">
+			  <div class="weui-form-preview__hd">
+			    <label class="weui-form-preview__label">付款金额</label>
+			    <em class="weui-form-preview__value" id="showTotalFeeO">0</em>
+			  </div>
+			  <div class="weui-form-preview__bd">
+			    <div class="weui-form-preview__item">
+			      <label class="weui-form-preview__label">车牌号码</label>
+			      <span class="weui-form-preview__value" id="showLicensePlateO"></span>
+			    </div>
+			    <div class="weui-form-preview__item">
+			      <label class="weui-form-preview__label">停车时长</label>
+			      <span class="weui-form-preview__value" id="showParkingLenO"></span>
+			    </div>
+			    <div class="weui-form-preview__item">
+				    <label class="weui-form-preview__label">免费时长</label>
+				    <span class="weui-form-preview__value" id="showfreeTimeO"></span>
+				</div>
+			    <div class="show-pay-flag-box">
+				    <div class="weui-form-preview__item">
+				      <label class="weui-form-preview__label">结账时间</label>
+				      <span class="weui-form-preview__value" id="showOutDateO"></span>
+				    </div>
+				    <div class="weui-form-preview__item">
+				      <label class="weui-form-preview__label">结账完成之后，请在15分钟内离场</label>
+				    </div>
+			    </div>
+				<div class="weui-form-preview__item" id="showFreeOutBox">
+				    <label class="weui-form-preview__label">免费时长内可免缴费出场</label>
+				</div>
+				
+				<div id="showPayBtnBox">
+					<div class="weui-btn weui-btn_primary cursor-pointer" id="wechatPayBtn">支付</div>
+				</div>
+			    
+			  </div>
+			</div>
+		</div>
+	</div>
+	<!-- 显示操作成功 start -->
+	<div class="weui-msg none" id="showSuccessContent" style="padding-top: 36px !important;">
+	  <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+	  <div class="weui-msg__text-area">
+	    <h2 class="weui-msg__title">支付成功</h2>
+	    <p class="weui-msg__desc">感谢使用CPTS，祝您一路顺风</p>
+	  </div>
+	  <div class="weui-msg__opr-area">
+	    <p class="weui-btn-area">
+	      <a href="javascript:;" class="weui-btn weui-btn_primary color-close cursor-pointer" id="closeWindows">关闭</a>
+	    </p>
+	  </div>
+<!-- 	  <div class="show-download-box">
+		  <div class="show-logo-box">
+				<img class="cpts-download-icon" src="/wechat/images/icon_cpts_download.png"/>
+		  </div>
+		  <div class="show-download-font">
+		  	长按扫码下载CPTS app享有更多优惠
+		  </div>
+	  </div> -->
+	</div>
+	<script th:inline="javascript">
+		contextPath = [[${ #request.getContextPath() }]];
+
+		var parkingId = [[${#request.getAttribute("parkingId")}]];
+		var authCode = [[${#request.getAttribute("authCode")}]];
+		//小写转大写方法
+		 function toUpperCase(obj)
+		 {
+		 	obj.value = obj.value.toUpperCase()
+		 }
+	</script>
+	<script src="https://as.alipayobjects.com/g/component/antbridge/1.1.1/antbridge.min.js"></script> 
+	<script th:src="@{../wechat/thirdplugin/require.js}"></script>
+	<script>
+		requirejs(['../wechat/thirdplugin/common.js?v='+(new Date()).getTime()]);
+		 requirejs(['../wechat/js/selectPaymentMethod.js?v='+(new Date()).getTime()]);
+	</script>
+	
+<!-- 	<script th:src="@{/thirdplugin/require.js}"></script>
+	<script th:inline="javascript">
+    var contextPath = [[${ #request.getContextPath() }]];  //全局项目路径,不需要重新定义
+      console.log(contextPath);
+      requirejs([contextPath + '/thirdplugin/common.js'],function(common){
+          requirejs([contextPath + '/wechat/js/selectPaymentMethod.js?v=' + (new Date()).getTime()]);
+      });
+   </script> -->
+
+	
+</body>
+</html>

@@ -1,0 +1,273 @@
+@charset "UTF-8";
+.none { display: none!important; }
+.clearfix { clear: both; }
+.float-l { folat: left; }
+.float-r { float: right; }
+
+/* layui 自定义定制 start */
+#showIndexTab .layui-tab-close { display: none; } 
+.layui-layout-admin .layui-header { background: #393D49; border-bottom: 5px solid #61acff; }
+.layui-layout-admin .layui-side { top: 65px; }
+.layui-layout-admin .layui-body { top: 65px; }
+.layui-body { left: 210px; }
+.custom-tab-box>.layui-tab-title .layui-this { color: white; background-color: #61acff; }
+.custom-tab-box>.layui-tab-title { border-bottom: 1px solid #61acff; }
+.layui-tab-title { height: 39px; }
+.layui-tab { margin-bottom: 0; }
+#showLayuiTabContent { overflow: auto; background-color: #f1f2f7; }
+.layui-tab-title li .layui-tab-close { border-radius: 9px; }
+.layui-tab-title li .layui-tab-close:hover { border-radius: 9px; }
+.layui-nav.layui-nav-tree .layui-nav-item a { cursor: pointer; }
+.show-footer-font { text-align: center; color: #555; }
+.layui-logo .show-logo-icon { display: inline-block; margin-top: 17px; width: 111px; height: 27px; vertical-align: sub; background-image: url(../images/logo_icon.png); background-repeat: no-repeat; background-size: 100%; }
+.custom-nav-center { margin-left: calc(50% - 304px); }
+.custom-nav-center.layui-nav .layui-nav-item { font-size: 24px; }
+.layui-header-new .layui-nav-bar { background-color: #393D49; }
+.layui-nav.layui-layout-right .layui-nav-item { line-height: 65px; }
+.setting-frame-content { background-color: #fff; padding: 20px; border-radius: 5px; border: 1px solid #eee; }
+.layui-form.font-num-6 .layui-form-label { width: 84px; }
+.layui-form.font-num-6 .layui-input-block { margin-left: 114px; }
+.layui-form-radio>i:hover, .layui-form-radioed>i { color: #61acff; }
+.layui-form-select dl dd.layui-this { background-color: #61acff; }
+.layui-nav.layui-nav-tree .layui-nav-item dd .show-new-tab { margin-left: 10px; }
+/* layui 自定义定制 end */
+/* layer弹窗自定义 start */
+.layuiWindownContent { padding: 20px; }
+.layui-layer-btn .layui-layer-btn0 { border-color: #61acff!important; background-color: #61acff!important; }
+/* layer 弹窗自定义 end */
+
+/* 菜单icon样式 start */
+.frame-title-icon.index-title-icon { background-image: url(../images/index_title_icon.png); background-repeat: no-repeat; background-size: 100%; width: 18px; height: 18px; position: absolute; top: 10px; }
+.layui-this .frame-title-icon.index-title-icon { background-image: url(../images/index_title_focus_icon.png); }
+
+/*
+.frame-list-icon.star-list-icon
+{ background-image: url(../images/star_list_icon.png); background-repeat: no-repeat; background-size: 100%; width: 18px; height: 18px; position: absolute; top: 12px; }
+*/
+.frame-list-icon.account-icon ,
+.frame-list-icon.stock-list-icon,
+.frame-list-icon.activity-list-icon,
+.frame-list-icon.cloneCar-list-icon,
+.frame-list-icon.parkingSpace-list-icon,
+.frame-list-icon.companyManage-list-icon,
+.frame-list-icon.equipment-list-icon,
+.frame-list-icon.account-list-icon,
+.frame-list-icon.user-list-icon,
+.frame-list-icon.finance-icon,
+.frame-list-icon.finance-list-icon,
+.frame-list-icon.fiance-clearingLog-list-icon,
+.frame-list-icon.memberRule-list-icon,
+.frame-list-icon.memberRule-icon,
+.frame-list-icon.firstWhiteList-list-icon,
+.frame-list-icon.sysRole-list-icon,
+.frame-list-icon.parkingInfo-icon,
+.frame-list-icon.parkingNoFee-icon,
+.frame-list-icon.parkingWhiteList-list-icon,
+.frame-list-icon.parkingInfo-list-icon,
+.frame-list-icon.monthlyCard-icon,
+.frame-list-icon.monthlyCard-list-icon,
+.frame-list-icon.monthlyCard-record-list-icon{
+ background-image: url(../images/logo_default.png);background-repeat: no-repeat; width: 25px; height: 40px; position: absolute;
+}
+
+.frame-list-icon.helpCenter-list-icon,
+.frame-list-icon.finance-order-list-icon,
+.frame-list-icon.finance-orderwithdraw-list-icon,
+.frame-list-icon.coupon-list-icon,
+.frame-list-icon.deduction-list-icon{
+    background-image: url(../images/logo_default2.png);background-repeat: no-repeat; width: 25px; height: 40px; position: absolute;
+}
+
+.frame-list-icon.parking-concession-list-icon,
+.frame-list-icon.version-icon,
+.frame-list-icon.software-update-list-icon,
+.frame-list-icon.mainapkversion-icon,
+.frame-list-icon.activity-manage-record-icon{
+    background-image: url(../images/logo_default3.png);background-repeat: no-repeat; width: 25px; height: 40px; position: absolute;
+}
+
+.frame-list-icon.log-manage-record-icon,
+.frame-list-icon.login-log-icon,
+.frame-list-icon.operate-record-icon{
+    background-image: url(../images/logo_default4.png);background-repeat: no-repeat; width: 25px; height: 40px; position: absolute;
+}
+
+.frame-list-icon.parking-user-list-icon{
+   background-image:url(../images/logo_default5.png);background-repeat: no-repeat;width: 18px; height: 40px; position: absolute;
+}
+
+.layui-this .frame-list-icon.account-icon ,
+.layui-this .frame-list-icon.stock-list-icon,
+.layui-this .frame-list-icon.activity-list-icon,
+.layui-this .frame-list-icon.cloneCar-list-icon, 
+.layui-this .frame-list-icon.parkingSpace-list-icon,
+.layui-this .frame-list-icon.companyManage-list-icon,
+.layui-this .frame-list-icon.equipment-list-icon,
+.layui-this .frame-list-icon.account-list-icon, 
+.layui-this .frame-list-icon.user-list-icon, 
+.layui-this .frame-list-icon.finance-icon,
+.layui-this .frame-list-icon.finance-list-icon,
+.layui-this .frame-list-icon.fiance-clearingLog-list-icon,
+.layui-this .frame-list-icon.memberRule-list-icon,
+.layui-this .frame-list-icon.memberRule-icon,
+.layui-this .frame-list-icon.firstWhiteList-list-icon,
+.layui-this .frame-list-icon.sysRole-list-icon,
+.layui-this .frame-list-icon.parkingInfo-icon,
+.layui-this .frame-list-icon.parkingNoFee-icon,
+.layui-this .frame-list-icon.parkingWhiteList-list-icon,
+.layui-this .frame-list-icon.parkingInfo-list-icon,
+.layui-this .frame-list-icon.monthlyCard-icon,
+.layui-this .frame-list-icon.monthlyCard-list-icon,
+.layui-this .frame-list-icon.monthlyCard-record-list-icon{
+ background-image: url(../images/logo_pressed.png);background-repeat: no-repeat; width: 25px; height: 40px; position: absolute;
+}
+
+.layui-this .frame-list-icon.helpCenter-list-icon,
+.layui-this .frame-list-icon.finance-order-list-icon,
+.layui-this .frame-list-icon.finance-orderwithdraw-list-icon,
+.layui-this .frame-list-icon.coupon-list-icon,
+.layui-this .frame-list-icon.deduction-list-icon{
+    background-image: url(../images/logo_pressed2.png);background-repeat: no-repeat; width: 25px; height: 40px; position: absolute;
+}
+
+/*
+.layui-this .frame-list-icon.parking-user-list-icon{
+    background-image: url(../images/logo_pressed.png);background-repeat: no-repeat; width: 25px; height: 40px; position: absolute;
+}
+*/
+.layui-this .frame-list-icon.parking-concession-list-icon,
+.layui-this .frame-list-icon.version-icon,
+.layui-this .frame-list-icon.software-update-list-icon,
+.layui-this .frame-list-icon.mainapkversion-icon,
+.layui-this .frame-list-icon.activity-manage-record-icon{
+    background-image: url(../images/logo_pressed3.png);background-repeat: no-repeat; width: 25px; height: 40px; position: absolute;
+}
+
+.layui-this .frame-list-icon.log-manage-record-icon,
+.layui-this .frame-list-icon.login-log-icon,
+.layui-this .frame-list-icon.operate-record-icon{
+    background-image: url(../images/logo_pressed4.png);background-repeat: no-repeat; width: 25px; height: 40px; position: absolute;
+}
+
+.layui-this .frame-list-icon.parking-user-list-icon{
+	background-image: url(../images/logo_pressed5.png);background-repeat: no-repeat; width: 25px; height: 40px; position: absolute;
+}
+
+
+/*top:calc(-10px);left:calc(-23px);clip: rect(23px,65px,43px,45px);*/
+.frame-list-icon.account-icon { background-position: -169px -27px; }
+
+.frame-list-icon.stock-list-icon { background-position: -44px -27px;}
+.frame-list-icon.parkingSpace-list-icon { background-position: -72px -27px;}
+.frame-list-icon.companyManage-list-icon { background-position: -104px -27px;}
+.frame-list-icon.equipment-list-icon { background-position: -137px -27px;}
+
+.frame-list-icon.account-list-icon { background-position: -202px -27px;}
+.frame-list-icon.user-list-icon { background-position: -231px -27px;}
+.frame-list-icon.sysRole-list-icon { background-position: -264px -27px;}
+
+
+.frame-list-icon.finance-icon { background-position: -106px -57px;}
+.frame-list-icon.finance-list-icon { background-position: -137px -59px;}
+.frame-list-icon.fiance-clearingLog-list-icon { background-position: -169px -59px;}
+
+.frame-list-icon.activity-list-icon { background-position: -202px -59px;}
+.frame-list-icon.cloneCar-list-icon { background-position: -234px -59px;}
+
+.frame-list-icon.parkingNoFee-icon { background-position: -267px -57px;}
+.frame-list-icon.firstWhiteList-list-icon { background-position: -44px -93px;}
+.frame-list-icon.parkingWhiteList-list-icon { background-position: -73px -59px}
+
+.frame-list-icon.parkingInfo-icon { background-position: -44px -57px;}
+.frame-list-icon.parkingInfo-list-icon { background-position: -72px -59px;}
+
+.frame-list-icon.monthlyCard-icon { background-position: -72px -93px;}
+.frame-list-icon.monthlyCard-list-icon { background-position: -104px -95px;}
+.frame-list-icon.monthlyCard-record-list-icon { background-position: -137px -95px;}
+
+.frame-list-icon.memberRule-icon { background-position: -169px -93px;}
+.frame-list-icon.memberRule-list-icon { background-position: -202px -95px;}
+
+/* 12月12号 start */
+.frame-list-icon.helpCenter-list-icon{background-position: -37px -125px;}
+.frame-list-icon.finance-order-list-icon { background-position: -65px -58px;}/*仿parkingInfo-list-icon*/
+.frame-list-icon.finance-orderwithdraw-list-icon { background-position: -275px -96px;}
+.frame-list-icon.coupon-list-icon { background-position: -221px -95px;}
+.frame-list-icon.deduction-list-icon { background-position: -249px -95px;}/* 仿stock-list-icon*/
+/* 12月12号 end */
+
+/* 2019年02月15号 start */
+/*.frame-list-icon.parking-user-list-icon{ background-position: -169px -27px;}*/
+.frame-list-icon.parking-concession-list-icon{ background-position: -67px -107px;}
+.frame-list-icon.version-icon{ background-position: -99px -107px;}
+.frame-list-icon.software-update-list-icon{ background-position: -131px -116px;height: 20px;margin-top: 8px;}
+.frame-list-icon.mainapkversion-icon{ background-position: -162px -116px;height: 20px;margin-top: 8px;}
+.frame-list-icon.activity-manage-record-icon{ background-position: -194px -116px;height: 20px;margin-top: 8px;}
+/* 2019年02月15号 end */
+
+/* 2019年02月18号 start */
+.frame-list-icon.log-manage-record-icon{ background-position: -222px -118px;height: 20px;margin-top: 12px;}
+.frame-list-icon.login-log-icon{ background-position: -245px -122px;height: 20px;margin-top: 12px;}
+.frame-list-icon.operate-record-icon{ background-position: -273px -119px;height: 21px;margin-top:11px;}
+/* 2019年02月18号 end */
+
+/* 2019年03月11号 start */
+.frame-list-icon.parking-user-list-icon{ background-position: 0px 13px;}
+/* 2019年03月11号 end */
+
+.layui-this .frame-list-icon.star-list-icon { background-image: url(../images/star_list_focus_icon.png); top: 10px; }
+dd .frame-list-icon.star-list-icon,
+.show-layui-tab-flag .frame-list-icon.star-list-icon { top: 10px; }
+.list-span-font { margin-left: 24px; }
+/* 菜单icon样式 end */
+
+/* 修改后台菜单和按钮颜色 start */
+.layui-nav-tree .layui-nav-child dd.layui-this,
+.layui-nav-tree .layui-nav-child dd.layui-this a,
+.layui-nav-tree .layui-this,
+.layui-nav-tree .layui-this>a,
+.layui-nav-tree .layui-this>a:hover{background-color:#61acff;}
+.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this {background-color:#61acff;}
+.custom-tab-box>.layui-tab-title .layui-this{background-color:#61acff;}
+.layui-laypage .layui-laypage-curr .layui-laypage-em{background-color:#61acff;}
+/*
+.layui-btn{background-color:#61acff}
+*/ /*置顶防止覆盖其它颜色*/
+.custom-tab-box>.layui-tab-title { border-bottom: 1px solid #61acff;}
+/*默认天蓝*/
+.layui-btn{background-color:#61acff;}
+/*
+.layui-logo,button.layui-btn,div.layui-btn{background-color:#61acff;}
+*/
+/*编辑*/
+.layui-btn .layui-btn-xs,.layui-btn-xs{background-color:#61acff;}
+/*禁用*/
+.layui-btn-warm {background-color:#ffc81e;}
+/*删除*/
+.layui-btn-danger{background-color:#ff4f4f;}
+.layui-nav-tree .layui-nav-bar {
+    width: 5px;
+    height: 0;
+    background-color: #61acff;
+}
+.layui-form-onswitch{background-color: #61acff;border-color:#61acff }
+td .layui-laydate .layui-this{background-color: #61acff;}
+.layui-laydate-content table tbody tr .layui-this{background-color: #61acff;}
+.layui-laydate-footer span:hover{color: #61acff;}
+/* 修改后台菜单和按钮颜色 end */
+.search{
+	display: inline-block;
+	margin-left: 10px;
+}
+
+/* leif 修改layui-form-checkbox样式 start */
+.layui-form-checkbox[lay-skin=primary]:hover i { border-color: #61acff; }
+.layui-form-checked[lay-skin=primary] i { border-color: #61acff; background-color: #61acff; }
+/* leif修改layui-form-checkbox样式 end */
+/* leif 修改头部显示公司名称和角色被选中时颜色样式 start */
+.layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after { background-color: #61acff; }
+/* leif 修改头部显示公司名称和角色被选中时颜色样式 end */
+/* leif 修改时间选择器颜色 start */
+.layui-laydate .layui-this { background-color: #61acff!important; }
+.layui-laydate-footer span:hover { color: #61acff!important; }
+/* leif 修改时间选择器颜色 end */

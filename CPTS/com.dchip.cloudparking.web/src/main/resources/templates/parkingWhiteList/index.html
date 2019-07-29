@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+<style type="text/css">
+ .red{vertical-align: sub;color: #f50909;}
+ /* .layui-layer-page .layui-layer-content{
+	 overflow: visible;
+ }
+ #showLayui{
+	 overflow: visible;
+ } */
+ </style>
+</head>
+
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+	    <div id="addParkingLicensePlate" class="layui-btn" style="display: inline-block;">添加车牌</div>
+	    <table class="layui-hide" id="secondWhiteListTable" lay-filter="secondWhiteListTable"></table>
+	    <script type="text/html" id="secondWhiteListTableBar">
+  		   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  		   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		   {{#  if(d.status == '0'){ }}
+    		  <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="ableWhiteList" id="ableParkingWhiteList">启用</a>
+		   {{#  }else{ }}
+			  <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="disableWhiteList" id="disableParkingWhiteList">禁用</a>
+		   {{#  } }}
+		</script>
+	    <script>
+	        requirejs([contextPath + '/js/parkingWhiteList/parkingWhiteList.js?v=' + (new Date()).getTime()]);
+	    </script>
+	</div>
+</div>
+<div id="showSecondWhiteListContent" style="display: none;">
+	<!-- 内容显示区域start -->
+		<div class="layuiWindownContent">
+			<div class="layui-form font-num-6" lay-filter="secondWhiteListFrom">
+				<div class="layui-form-item">
+					<label class="layui-form-label"><span class="red">* </span>停车场名称</label>
+					<div class="layui-input-block">
+						<select id="parkName" name="parkName" lay-filter="parkName">
+							<option value=""></option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"><span class="red">* </span>车牌号码</label>
+					<div class="layui-input-block">
+						<input type="text" id="parkingLicensePlate"
+							name="parkingLicensePlate" placeholder="请输入车牌" autocomplete="off"
+							class="layui-input">
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- 内容显示区域end -->
+</div>
+</body>
+
+</html>

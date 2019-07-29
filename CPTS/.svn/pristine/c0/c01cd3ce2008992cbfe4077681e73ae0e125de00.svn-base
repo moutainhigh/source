@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+</head>
+
+<body>
+<div class="setting-frame-content">
+    <div class="form-group">
+        <table class="layui-hide" id="recordTable" lay-filter="recordTable"></table>
+    </div>
+</div>
+<script th:inline="javascript">
+		var i18n = [[${#request.getAttribute("i18n")}]];
+		console.log(i18n);
+	</script>
+<script>
+    requirejs([contextPath + '/js/monthlyCard/record.js?v=' + (new Date()).getTime()]);
+</script>
+</body>
+
+</html>

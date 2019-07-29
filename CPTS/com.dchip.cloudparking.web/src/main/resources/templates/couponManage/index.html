@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+<style type="text/css">
+.layui-form-radio{margin: 6px -18px 6px 20px;}
+.layui-input, .layui-textarea {display:inline-block;}
+.red{color:red;}
+.deviate{padding-left: 8px;}
+.type{display: inline-block;width: 50%;margin-left: -10px;}
+.grade{width: 90px !important; padding: 23px 13px 13px 12px;}
+.deadline{letter-spacing: 4px;}
+.deadType{letter-spacing: 6px;padding: 10px 9px 11px 19px;}
+.facevalue{letter-spacing: 1px;}
+</style>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+	 <div id="addCoupon" class="layui-btn" >添加优惠券</div>
+	 <table class="layui-hide" id="couponManageTable" lay-filter="couponManageTable"></table>
+    </div>
+</div>
+<div id="showCouponContent" style="display: none;">
+	<!-- 内容显示区域start -->
+	<div class="layuiWindownContent">
+	<div class="layui-form font-num-6" lay-filter="couponFrom">
+		<div class="layui-form-item">
+			<label class="layui-form-label facevalue" id="couponTotal"><span class="red">*</span>优惠券面值</label>
+			<div class="layui-input-inline deviate">
+				<input type="number" id="count" name="count" placeholder="￥" autocomplete="off" 
+				class="layui-input" oninput="if(value.length>5)value=value.slice(0,5)">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label deadType" id="couponType">抵扣类型</label>
+			<div class="type">
+				<input type="radio" name="deductionType" lay-filter="deductionTypeFilter" value="1" title="全抵扣" checked="checked">
+				<input type="radio" name="deductionType" lay-filter="deductionTypeFilter" value="2" title="分次抵扣">
+			</div>
+		</div>
+		<div class="layui-form-item" id="setPartDeduction" style="display: none">
+			<label class="layui-form-label">分次抵扣面值</label>
+			<div class="layui-input-inline deviate">
+				<input type="number" id="partDeduction" name="partDeduction" placeholder="￥" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label deadType" id="endType">截止类型</label>
+			<div class="type">
+				<input type="radio" name="endDateType" lay-filter="endDateTypeFilter" value="1" title="统一结束" checked="checked">
+				<input type="radio" name="endDateType" lay-filter="endDateTypeFilter" value="2" title="领券后计时">
+			</div>
+		</div>
+		<div class="layui-form-item" id="setEndTime" style="display: none">
+			<label class="layui-form-label deadline" id="writeEndtime"><span class="red">*</span>截止时间</label>
+			<div class="layui-input-inline deviate">
+				<input type="text" id="endTime" name="endTime" placeholder="请填写截止时间" autocomplete="off" class="layui-input" readonly="readonly">
+			</div>
+		</div>
+		<div class="layui-form-item" id="setEndNum" style="display: none">
+			<label class="layui-form-label"><span class="red">*</span>截止数</label>
+			<div class="layui-input-inline deviate">
+				<input type="number" id="endNum" name="endNum" lay-filter="endNumFilter" placeholder="请填写截止数" autocomplete="off" class="layui-input">
+			</div>
+			<div class="layui-input-inline" style="width: 100px;">
+				<select id="endType" name="endType" lay-filter="endTypeFilter">
+					<option value="1">日</option>
+					<option value="2">月</option>
+					<option value="3">年</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-form-item" pane="">
+			<label class="layui-form-label grade" id="choseMember"><span class="red">*</span>授权会员等级</label>
+			<div class="layui-input-block deviate" id="memberIdsDiv">
+			     <!--<input type="checkbox" name="memberIds" value="0" lay-skin="primary" title="普通会员" checked=""/>-->
+			     <!--<input type="checkbox" name="memberIds" value="1" lay-skin="primary" title="铜牌会员"/>-->
+			     <!--<input type="checkbox" name="memberIds" value="2" lay-skin="primary" title="银牌会员"/>-->
+			     <!--<input type="checkbox" name="memberIds" value="3" lay-skin="primary" title="金牌会员"/>-->
+			     <!--<input type="checkbox" name="memberIds" value="4" lay-skin="primary" title="白金会员"/>-->
+		    </div>
+		</div>
+	</div>
+  </div>
+</div>
+<script th:inline="javascript">
+	var i18n = [[${#request.getAttribute("i18n")}]];
+</script>
+<script>
+	requirejs([contextPath+'/js/couponManage/couponManage.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

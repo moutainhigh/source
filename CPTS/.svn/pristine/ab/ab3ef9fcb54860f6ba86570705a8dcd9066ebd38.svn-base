@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>云停车平台</title>
+<style type="text/css">
+.layui-form-radio{margin: 6px -18px 6px 20px;}
+.layui-input, .layui-textarea {display:inline-block;}
+.red{color:red}
+.outputNumber{width: 110px !important;padding: 9px;margin-left: -15px;}
+/* .layui-layer-page .layui-layer-content{
+	overflow: visible;
+}
+#showLayui{
+	overflow: visible;
+} */
+</style>
+</head>
+<body>
+<div class="setting-frame-content">
+	<div class="form-group">
+	 <div id="addActivity" class="layui-btn" >添加活动</div>
+	 <table class="layui-hide" id="activityManageTable" lay-filter="activityManageTable"></table>
+    </div>
+</div>
+<div id="showActivityContent" style="display: none;">
+	<!-- 内容显示区域start -->
+	<div class="layuiWindownContent">
+	<div class="layui-form font-num-6" lay-filter="activityFrom">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="red">* </span>活动名称</label>
+			<div class="layui-input-block">
+				<input type="text" id="activityRemark" name="activityRemark" placeholder="请填写活动名称" autocomplete="off" 
+				class="layui-input" maxlength="50">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="red">* </span>有效类型</label>
+			<div class="layui-input-block">
+				<select id="effectiveType" name="effectiveType" lay-filter="effectiveType">
+					<option value="1">长期有效</option>
+					<option value="2">时间内有效</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-form-item" id="setEffectiveTime" style="display:none">
+			<label class="layui-form-label"><span class="red">* </span>有效时间</label>
+			<div class="layui-input-block">
+				 <input type="text" id="effectiveTime" name="effectiveTime" placeholder="请填写有效时间" autocomplete="off" class="layui-input" >
+		    </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="red">* </span>优惠券类型</label>
+			<div class="layui-input-block">
+				<select id="couponId" name="couponId" lay-filter="couponId">
+				</select>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label outputNumber"><span class="red">* </span>优惠券发放数量</label>
+			<div class="layui-input-block">
+				<input type="text" id="couponCount" name="couponCount" placeholder="请填写优惠券发放数量" autocomplete="off" class="layui-input" >
+			</div>
+		</div>
+		<!--<div class="layui-form-item" pane="">-->
+			<!--<label class="layui-form-label">用户授权</label>-->
+			<!--<div class="layui-input-block">-->
+			     <!--<input type="checkbox" name="OrdinaryMember" value="0" lay-skin="primary" title="普通会员" checked=""/>-->
+			     <!--<input type="checkbox" name="BronzeMember"   value="1" lay-skin="primary" title="铜牌会员"/>-->
+			     <!--<input type="checkbox" name="SilverMember"   value="2" lay-skin="primary" title="银牌会员"/>-->
+			     <!--<input type="checkbox" name="GoldMedals"     value="3" lay-skin="primary" title="金牌会员"/>-->
+			     <!--<input type="checkbox" name="platinumMember" value="4" lay-skin="primary" title="白金会员"/>-->
+		    <!--</div>-->
+		<!--</div>-->
+	</div>
+  </div>
+</div>
+<script>
+	requirejs([contextPath+'/js/activityManage/activityManage.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

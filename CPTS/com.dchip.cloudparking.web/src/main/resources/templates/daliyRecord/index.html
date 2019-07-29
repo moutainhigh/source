@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+</head>
+<body>
+<div class="setting-frame-content">
+    <div class="form-group">
+        <div class="layui-form">
+            <div class="layui-form-item">
+            <label class="layui-form-label" id="actTypeName">操作类型</label>
+                <div class="layui-input-inline">
+                    <select name="searchActType" id="searchActType">
+                        	<option value="" selected="">请选择操作类型</option>
+				           <option value="1">添加</option>
+				           <option value="2">删除</option>
+				           <option value="3">编辑</option>
+				           <option value="4">禁用</option>
+				           <option value="5">启用</option>
+				           <option value="6">规则设置</option>
+				           <option value="7">修改密码</option>
+				           <option value="8">月卡导入信息</option>
+				           <option value="9">审核通过</option>
+				           <option value="10">审核不通过</option>
+				           <option value="11">提示更新</option>
+				           <option value="12">申请提现</option>
+				           <option value="13">确认转账</option>
+				           <option value="14">同意申请</option>
+                    </select>
+                </div>
+                <label class="layui-form-label" id="actUsername">用户账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="searchActUserName" id="searchActUserName" lay-verify="title" autocomplete="off" placeholder="请输入用户账号"
+                        class="layui-input">
+                </div>
+                <div id="searchActDeily" class="layui-btn search">搜索</div>
+            </div>
+        </div>
+    </div>
+	<table class="layui-hide" id="daliyRecordTable" lay-filter="daliyRecordTable"></table>
+</div>
+<script  th:inline="javascript">
+	requirejs([contextPath+'/js/daliyRecord/daliyRecord.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>

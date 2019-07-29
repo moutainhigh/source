@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="_csrf" th:attr="content=${_csrf.token}" />
+	<meta name="_csrf_header" th:attr="content=${_csrf.headerName}"/>
+	<title>云停车平台</title>
+	<link rel="stylesheet" th:href="@{/css/login.css}" />
+	<link rel="stylesheet" th:href="@{/css/Animate.css}" />
+	<link rel="icon" th:href="@{/favicon.ico}" type="image/png">
+</head>
+<body class="login-background">
+
+	<div class="logoName">
+      <div style="background-image: url(images/loginimgs/logo.png);left:calc(52% - 300px);"></div>
+      <div style="background-image: url(images/loginimgs/name.png);left:calc(52% - 100px);"></div>
+	</div>
+
+	<div class="bgImgs">
+	  <div style="background-color: white;z-index:1; height:466px;width:763px;"></div>
+	  <div style="background-image: url(images/loginimgs/bg_box1.png);z-index:3;"></div>
+	  <div style="background-image: url(images/loginimgs/bg_box2.png);z-index:2;"></div>
+	  <div style="background-image: url(images/loginimgs/look_at_cloud_pc.png);z-index:5;top:72px;"></div>
+    </div>
+	<!-- 登录背景层 start -->
+	<div class="login-background-box fadeInDown delay10"></div>
+	<!-- 登录背景层 end -->
+	<!-- 登录内容层 start -->
+	<div class="login-content-box" style="z-index:10">
+   
+	    <!-- <div class="login-title-box flipInX delay10">鼎芯云停车平台</div> -->
+		<div class="login-title-box flipInX delay10" style="z-index:6" th:text="#{login.tip}">欢迎登录</div>
+		<!-- 用户输入区域 start -->
+		<div class="login-input-box fadeInLeft delay14">
+			<div class="login-input-content">
+				<div class="login-edit-box">
+					<i id="userNameIcon" class="ec-user show-input-icon"></i>
+					<input type="text" id="userName" th:placeholder="#{login.username}" class="inp-show-edit inp-show-edit-blue" spellcheck="false" autocomplete="off" placeholder="用户名">
+				</div>
+			</div>
+			<div class="login-input-content">
+				<div class="login-edit-box">
+					<i id="passwordIcon" class="ec-locked show-input-icon"></i>
+					<input type="password" id="passWord" th:placeholder="#{login.password}" class="inp-show-edit inp-show-edit-blue" placeholder="密码">
+				</div>
+				<div id="showLoginError" class="show-login-error visibility-hidden" th:text="#{login.error}">用户名或密码不正确，请重新输入</div>
+			</div>
+			<div class="login-remember-content">
+				<div class="login-edit-box">
+					<input type="checkbox" class="checkbox-style" id="rememberPWD" checked="checked">
+					<label for="rememberPWD" class="checkbox-label" th:text="#{login.remember}"></label>
+				</div>
+			</div>
+		</div>
+		<!-- 用户输入区域 end -->
+		<div class="login-submit zoomIn delay10" id="loginSubmit" th:text="#{login.btn}"></div>
+		<div>
+			<div class="chanese"><a class="btn btn-sm" th:href="@{/login(lang='zh_CH')}">中文</a></div>
+			<div class="taiwan"><a class="btn btn-sm" th:href="@{/login(lang='zh_TW')}">繁体</a></div>
+			<div class="english"><a class="btn btn-sm" th:href="@{/login(lang='en_US')}" id="change">English</a></div>
+		</div>
+	</div>
+	<!-- 登录内容层 start -->
+	<!-- 最下面显示备案号与版本号层 start -->
+	<div class="login-foot-box">
+		<div class="show-record-box">Copyright © 2013-2019 鼎芯科技集团  粤ICP备14021396号</div>
+		<div class="show-version-box">V3.2.0.20190417_beta</div>
+	</div>
+	<!-- 最下面显示备案号与版本号层 end -->
+	<!-- 提示信息层 start -->
+	<div class="custom-layer-box none" th:text="#{login.nosupport}">
+		此浏览器不支持该功能，请升级到最新版本或更换浏览器
+	</div>
+	<!-- 提示信息层 end -->
+	<!-- 自定义遮罩层 start -->
+	<div class="custom-mask-box none">
+		<div class="custom-mask-content"></div>
+		<div class="custom-background-box">
+			<div class="custom-mask-icon-box">
+				<i class="show-load-icon"></i>
+			</div>
+			<div class="custom-mask-font" th:text="#{login.loging}">
+				登录中...
+			</div>
+		</div>
+	</div>
+	<!-- 自定义遮罩层 end -->
+	<script th:src="@{/thirdplugin/require.js}"></script>
+	<script th:inline="javascript">
+		var i18n = [[${#request.getAttribute("i18n")}]];
+        contextPath = [[${#request.getContextPath()}]];
+        requirejs([contextPath+'/thirdplugin/common.js'],function(common){
+			 requirejs([contextPath+'/js/login.js']);
+		});
+        // var passWordDiv = document.getElementById("passWord");
+        // var userNameDiv = document.getElementById("userName");
+        // passWordDiv.onfocus = function(){
+        //    	document.getElementById("passwordIcon").setAttribute("class", "ec-locked-blue show-input-icon");
+        // }
+        // passWordDiv.onblur = function(){
+        //    	// document.getElementById("passwordIcon").setAttribute("class", "ec-locked show-input-icon");
+        // }
+        // userNameDiv.onfocus = function(){
+        // 	document.getElementById("userNameIcon").setAttribute("class", "ec-user-blue show-input-icon");
+        // }
+        // userNameDiv.onblur = function(){
+        //    	// document.getElementById("userNameIcon").setAttribute("class", "ec-user show-input-icon");
+        // }
+
+        document.getElementById("userName").oninput = function(){
+            console.log("userName onchange")
+            if(document.getElementById("userName").value == "" || document.getElementById("userName").value == null ){
+                document.getElementById("userNameIcon").setAttribute("class", "ec-user show-input-icon");
+            }else{
+                document.getElementById("userNameIcon").setAttribute("class", "ec-user-blue show-input-icon");
+            }
+        }
+        document.getElementById("passWord").oninput = function(){
+            if(document.getElementById("passWord").value == "" || document.getElementById("passWord").value == null ){
+                document.getElementById("passwordIcon").setAttribute("class", "ec-locked show-input-icon");
+            }else {
+                document.getElementById("passwordIcon").setAttribute("class", "ec-locked-blue show-input-icon");
+            }
+        }
+	</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+</head>
+
+<body>
+<div class="setting-frame-content">
+    <div class="form-group">
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select name="financeType" id="financeType">
+                        <option value="0" selected="">全部</option>
+                        <option value="1">停车消费</option>
+                        <option value="2">月卡缴费</option>
+                    </select>
+                </div>
+                <label class="layui-form-label">停车场名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" id="searchFinanceParking" lay-verify="title" autocomplete="off"
+                        placeholder="请输入停车场名称" class="layui-input">
+                </div>
+                <label class="layui-form-label">公司名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" id="searchFinanceCompany" lay-verify="title" autocomplete="off" placeholder="请输入公司名称"
+                        class="layui-input">
+                </div>
+                <div id="financeSearch" class="layui-btn">搜索</div>
+                <div id="financeExcel" class="layui-btn">导出财务列表</div>
+            </div>
+        </div>
+        <table class="layui-hide" id="financeTable" lay-filter="financeTable"></table>
+        <div id="showClearContent" style="display: none;">
+            <!-- 内容显示区域start -->
+            <div class="layuiWindownContent">
+                <div class="layui-form" lay-filter="clearFrom">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="red">* </span>结算方</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="name" name="name"
+                                lay-verify="name" autocomplete="off" class="layui-input"
+                                placeholder="请填写结算方">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="red">* </span>结算人</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="person" name="person"
+                                lay-verify="person" autocomplete="off" class="layui-input"
+                                placeholder="请填写结算人">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="red">* </span>结算账户</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="account" name="account"
+                                lay-verify="account" autocomplete="off" class="layui-input"
+                                placeholder="请填写结算账户">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 内容显示区域end -->
+        </div>
+        <script>
+            requirejs([contextPath + '/js/finance/finance.js?v=' + (new Date()).getTime()]);
+        </script>
+    </div>
+</div>
+</body>
+
+</html>

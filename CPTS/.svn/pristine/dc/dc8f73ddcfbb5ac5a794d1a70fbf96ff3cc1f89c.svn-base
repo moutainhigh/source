@@ -1,0 +1,22 @@
+parking.error=\u8BBE\u5907\u914D\u7F6E\u4FE1\u606F\u9519\u8BEF
+parking.disabled.message=\u505C\u8F66\u573A\u5DF2\u7981\u7528
+parking.in.exceed.message={0},\u6B64\u8F66\u4F4D\u8F66\u8F86\u5DF2\u5165\u573A
+parking.in.greeting.message={0},{1} \u6B22\u8FCE\u5149\u4E34\uFF01{2}
+parking.out.greeting.message={0},\u4E00\u8DEF\u987A\u98CE
+parking.in.warning.message={0}{1},\u7981\u6B62\u5165\u573A
+parking.black.user.messages=\u60A8\u5DF2\u88AB\u9650\u5236\u5165\u573A\uFF0C\u8BF7\u53CA\u65F6\u652F\u4ED8\u6B20\u8D39\u8D26\u5355
+parking.black.user.notice=\u901A\u77E5
+parking.disabled.user.message=\u4F1A\u5458\u5DF2\u7981\u7528
+parking.error.in.null=\u5165\u573A{0}
+parking.error.voice=\u5165\u573A\u4FE1\u606F\u4E22\u5931\uFF0C\u8BF7\u4E00\u952E\u547C\u53EB\u7BA1\u7406\u5458
+parking.message.voice=\u505C\u8F66\u65F6\u957F{0}\uFF0C\u6536\u8D39{1}\u5143
+parking.card.expire.message=\u5C0A\u656C\u7684{0}\u7528\u6237\uFF0C\u60A8\u7684\u6708\u5361\u5DF2\u8FC7\u671F
+parking.temp.message={},\u8BF7\u5FAE\u4FE1\u626B\u7801\u652F\u4ED8
+parking.out.plate.QRCode.url=/cloudParkingWechat/userAccredit
+parking.websocket.server.host=/websocket
+parking.param.error.null={0}\u4E0D\u80FD\u4E3A\u7A7A
+parking.space.full.message=\u8F66\u4F4D\u5DF2\u6EE1
+parking.error.islock.message=\u8F66\u5DF2\u9501\uFF0C\u8BF7\u5728APP\u5F00\u9501
+parking.domain = http\://cloudparkingtest.d-chip.com
+
+parking.concession.rentout=\u60a8\u5df2\u79df\u8ba9\u8f66\u4f4d

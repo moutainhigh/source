@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+<style type="text/css">
+.red{color:red;}
+.regular-space{width: 100px !important;margin-left: -12px;}
+.supportmax{width: 125px !important;margin-left: -29px;padding: 9px;}
+/* .layui-layer-page .layui-layer-content{
+overflow: visible;
+}
+#showLayui{
+overflow: visible;
+} */
+</style>
+</head>
+
+<body>
+<script th:inline="javascript">
+	var i18n = [[${#request.getAttribute("i18n")}]];
+    var domainUrl = [[${#request.getAttribute("domainUrl")}]];
+</script>
+<div class="setting-frame-content">
+    <div class="form-group">
+		<div class="layui-form">
+			<div class="layui-form-item">
+				<div id="importShow" class="layui-btn" >导入月卡信息</div>
+				<a href="" id="download" class="layui-btn layui-btn-normal">月卡导入模板</a>
+				<div id="addMonthlyCard" class="layui-btn">添加月卡信息</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label" id="MonthlyParkingName">停车场名称</label>
+				<div class="layui-input-inline">
+					<input type="text" name="searchParkingName" id="searchParkingName" autocomplete="off" placeholder="请输入停车场名称" class="layui-input" oninput="if(value.length>30)value=value.slice(0,30)">
+				</div>
+				<label class="layui-form-label" id="monthlyOwnName">车主姓名</label>
+				<div class="layui-input-inline">
+					<input type="text" name="searchUserName" id="searchUserName" autocomplete="off" placeholder="请输入车主姓名" class="layui-input" oninput="if(value.length>20)value=value.slice(0,20)">
+				</div>
+				<label class="layui-form-label" id="monthlyNum">卡编号</label>
+				<div class="layui-input-inline">
+					<input type="text" name="searchCardCode" id="searchCardCode" autocomplete="off" placeholder="请输入卡编号" class="layui-input" oninput="if(value.length>20)value=value.slice(0,20)">
+				</div>
+				<label class="layui-form-label" id="monthlyLicensePlate">车牌号</label>
+				<div class="layui-input-inline">
+					<input type="text" name="searchMonthlyCardLicensePlate" id="searchMonthlyCardLicensePlate" autocomplete="off" placeholder="请输入车牌号" class="layui-input" 
+					oninput="if(value.length>10)value=value.slice(0,10)" style="text-transform:uppercase;">
+				</div>
+				<label class="layui-form-label" id="monthlyEndDate">到期时间前</label>
+				<div class="layui-input-inline">
+					<input type="text" name="searchExpiryTimeString" id="searchExpiryTimeString" autocomplete="off" placeholder="yyyy-MM-dd HH:mm:ss" class="layui-input">
+				</div>
+				<div id="cardListSearch" class="layui-btn">搜索</div>
+			</div>
+		</div>
+
+        <table class="layui-hide" id="monthlyCardTable" lay-filter="monthlyCardTable"></table>
+        <script type="text/html" id="monthlyCardBar">
+  			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
+		<script type="text/html" id="monthlyCardBarEnglish">
+  			<a class="layui-btn layui-btn-xs" lay-event="edit">Edit</a>
+  			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">Del</a>
+		</script>
+        
+    </div>
+</div>
+
+<div id="showImportContent" style="display: none;">
+     <form name="form" action="#" method="post" enctype="multipart/form-data" id="excelPost" class="layui-form" style="padding:5% 8%;">
+        <div class="layui-form-item">
+             <label class="layui-form-label"><span class="red">* </span>停车场名称</label>
+             <div class="layui-input-block">
+                 <select id="parkName" name="parkName" lay-filter="parkName">
+                     <option value=""></option>
+                 </select>
+             </div>
+        </div>        
+        <div class="layui-form-item">
+              <label class="layui-form-label"><span class="red">* </span>上传文件</label>
+              <div class="layui-input-inline">
+                   <input type="file" name="file" id="fileFlag"/>
+              </div>
+         </div>
+      </form>       
+</div>
+
+<div id="addMonthlyCardContent" style="display: none;">
+     	<!-- 内容显示区域 start -->
+	<div class="layuiWindownContent">
+		<div class="layui-form font-num-6" lay-filter="monthlyCardFrom">
+			<input type="hidden" id="cardId" name="cardId">
+			<div class="layui-form-item">
+				<label class="layui-form-label" id="monthlyCardParkingName"><span class="red">* </span>停车场名称</label>
+				<div class="layui-input-block">
+				  <select id="monthlyCardName" name="monthlyCardName" lay-filter="monthlyCardName" lay-verify="monthlyCardName">
+					<option value=""></option>
+				  </select>
+				</div>
+			</div>
+			<div class="layui-form-item none">
+				<label class="layui-form-label"><span class="red">* </span>卡编号</label>
+				<div class="layui-input-block">
+					<input type="text" id="monthlyCardCode" name="monthlyCardCode" placeholder="请填卡编号" autocomplete="off" class="layui-input" lay-verify="monthlyCardCode" oninput="if(value.length>20)value=value.slice(0,20)">
+				</div>
+			</div>
+			<div class="layui-form-item">
+			<label class="layui-form-label deadType" id="monthlyCardIsMoreCar"><span class="red">* </span>是否一卡多车</label>
+			<div class="type">
+				<!-- <input type="radio" name="isMoreCar" lay-filter="isMoreCarFilter" value="1" title="一卡一车" checked="checked">
+				<input type="radio" name="isMoreCar" lay-filter="isMoreCarFilter" value="2" title="一卡多车"> -->
+				<input type="checkbox" id="isMoreCar" name="isMoreCar" lay-skin="switch" lay-text="是|否" lay-filter="isMoreCarFilter" lay-verify="isMoreCar">
+					<input type="hidden" id="isMoreCarHidden" value="1">
+			</div>
+		</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label" id="writeMonthlyCardLicensePlate"><span class="red">* </span>车牌号码</label>
+				<label class="layui-form-label" style="padding-left: 0px;padding-right: 0px;padding-top: 0px; right: 30px;">
+				<button id="licensePlateHead" class="layui-btn layui-btn-primary " ></button>
+				</label>
+				<div class="layui-input-inline" style="right: 30px;">
+				<input type="text" id="monthCardLicensePlate" name="monthCardLicensePlate" placeholder="请填写车牌号码" autocomplete="off" class="layui-input" 
+					lay-verify="monthCardLicensePlate" oninput="if(value.length>10)value=value.slice(0,10)" style="text-transform:uppercase; width:350px;">
+				</div>
+			</div>
+			<div class="layui-form-item" id="theSecondLicensePlate" style="display: none">
+			<label class="layui-form-label" id="SecondCar">副车牌一</label>
+			<div class="layui-input-block deviate">
+				<input type="text" id="secondLicensePlate" name="partDeduction" placeholder="请输入车牌" autocomplete="off" class="layui-input"
+				lay-verify="secondLicensePlate" oninput="if(value.length>10)value=value.slice(0,10)" style="text-transform:uppercase;">
+			</div>
+			</div>
+			<div class="layui-form-item" id="theThirdLicensePlate" style="display: none">
+			<label class="layui-form-label" id="ThirdCar">副车牌二</label>
+			<div class="layui-input-block deviate">
+				<input type="text" id="thirdLicensePlate" name="partDeduction" placeholder="请输入车牌" autocomplete="off" class="layui-input"
+				lay-verify="secondLicensePlate" oninput="if(value.length>10)value=value.slice(0,10)" style="text-transform:uppercase;">
+			</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label" id="writeCarOwnerName"><span class="red">* </span>车主名称</label>
+				<div class="layui-input-block">
+					<input type="text" id="carOwnerName" name="carOwnerName" placeholder="车主名称" autocomplete="off" class="layui-input" lay-verify="carOwnerName" oninput="if(value.length>15)value=value.slice(0,15)">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label" id="writePhoneNum"><span class="red">* </span>手机号码</label>
+				<div class="layui-input-block">
+					<input type="text" id="monthlyCardPhone" name="monthlyCardPhone" placeholder="请填写手机号码" autocomplete="off" class="layui-input" lay-verify="monthlyCardPhone" oninput="if(value.length>20)value=value.slice(0,20)">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label" id="writeLocation"><span class="red">* </span>公司/地址</label>
+				<div class="layui-input-block">
+					<input type="text" id="monthlyCardAddress" name="monthlyCardAddress" placeholder="请填写住址" autocomplete="off" class="layui-input" lay-verify="monthlyCardAddress">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label" id="choseCardType"><span class="red">* </span>月卡类型</label>
+				<div class="layui-input-block">
+					<select id="cardType" name="cardType" lay-filter="cardTypeFilter" lay-verify="cardType">
+						<option value=""></option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item" id="showEndTimeBox">
+				<label class="layui-form-label" id="choseEndTime"><span class="red">* </span>到期时间</label>
+				<div class="layui-input-block">
+					<input type="text" id="cardExpiryTime" name="cardExpiryTime" placeholder="yyyy年MM月dd日 HH时mm分ss秒" autocomplete="off" class="layui-input" lay-verify="cardExpiryTime">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label" id="choseIsMainCar"><span class="red">* </span>是否主车牌</label>
+				<div class="layui-input-block">
+					<input type="checkbox" id="isMain" name="isMain" lay-skin="switch" lay-text="是|否" lay-filter="isMainFilter" lay-verify="isMain">
+					<input type="hidden" id="isMainHidden" value="0">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label supportmax" id="writeMaxCar"><span class="red">* </span>同组车支持最大数</label>
+				<div class="layui-input-block">
+					<input type="text" id="supportMax" 
+					name="supportMax" 
+					placeholder="" 
+					autocomplete="off" 
+					class="layui-input default-input"  
+					onblur="check(this)"
+					onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label regular-space" id="choseFixedSpace"><span class="red">* </span>是否固定车位</label>
+				<div class="layui-input-block">
+					<input type="checkbox" id="isFixedSpace" name="isFixedSpace" lay-skin="switch" lay-text="是|否" lay-filter="isFixedSpaceFilter" lay-verify="isFixedSpace">
+					<input type="hidden" id="isFixedSpaceHidden" value="0">
+				</div>
+			</div>
+			
+
+			<div class="layui-form-item">
+				<label class="layui-form-label" id="writeRemark"> 备注</label>
+				<div class="layui-input-block">
+					<input type="text" id="cardRemark" name="cardRemark" autocomplete="off" class="layui-input" oninput="if(value.length>100)value=value.slice(0,100)">
+				</div>
+			</div>
+
+
+		 </div>
+	</div>
+	<!-- 内容显示区域 end -->
+</div>
+
+<div id="choseLicencePlateHead"  style="display: none;">
+     	<!-- 内容显示区域 start -->
+	<div class="layuiWindownContent">
+		<div class="layui-form font-num-6" lay-filter="monthlyCardFrom">
+			<div class="layui-form-item">
+		 	<input type="radio" name="head" value="京" title="京" checked="">
+		 	<input type="radio" name="head" value="津" title="津">
+		 	<input type="radio" name="head" value="沪" title="沪">
+		 	<input type="radio" name="head" value="渝" title="渝">
+		 	<input type="radio" name="head" value="宁" title="宁">
+		    <input type="radio" name="head" value="藏" title="藏">
+		    <input type="radio" name="head" value="桂" title="桂">
+		    <input type="radio" name="head" value="新" title="新">
+		    <input type="radio" name="head" value="蒙" title="蒙">
+		    <input type="radio" name="head" value="港" title="港">
+			<input type="radio" name="head" value="澳" title="澳">
+		    <input type="radio" name="head" value="黑" title="黑">
+		    <input type="radio" name="head" value="云" title="云">
+		    <input type="radio" name="head" value="吉" title="吉">
+		    <input type="radio" name="head" value="皖" title="皖">
+		    <input type="radio" name="head" value="鲁" title="鲁">
+		    <input type="radio" name="head" value="粤" title="粤">
+		    <input type="radio" name="head" value="桂" title="桂">
+		    <input type="radio" name="head" value="苏" title="苏">
+		    <input type="radio" name="head" value="赣" title="赣">
+		    <input type="radio" name="head" value="冀" title="冀">
+		    <input type="radio" name="head" value="豫" title="豫">
+		    <input type="radio" name="head" value="浙" title="浙">
+		    <input type="radio" name="head" value="琼" title="琼">
+		    <input type="radio" name="head" value="鄂" title="鄂">
+		    <input type="radio" name="head" value="湘" title="湘">
+		    <input type="radio" name="head" value="甘" title="甘">
+		    <input type="radio" name="head" value="闽" title="闽">
+		    <input type="radio" name="head" value="川" title="川">
+		    <input type="radio" name="head" value="贵" title="贵">
+		    <input type="radio" name="head" value="辽" title="辽">
+		    <input type="radio" name="head" value="陕" title="陕">
+		    <input type="radio" name="head" value="青" title="青">
+		    <input type="radio" name="head" value="台" title="台">
+		 </div>
+		
+		</div>
+	</div>
+</div>
+
+
+
+</body>
+<script>
+    requirejs([contextPath + '/js/monthlyCard/monthlyCard.js?v=' + (new Date()).getTime()]);
+    $("#download").attr("href",domainUrl+"/monthlyCardImportTest.xlsx");
+</script>
+</html>

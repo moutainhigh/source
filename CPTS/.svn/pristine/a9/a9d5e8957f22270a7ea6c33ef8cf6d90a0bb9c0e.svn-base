@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+<style type="text/css">
+#startTime{width:135px;height:30px;padding: 0px 15px;}
+#endTime{width:135px;height:30px;padding: 0px 15px;}
+.apply{height: 35px;margin-top: -3px;margin-left: 10px;}
+.totalSum{display: inline-block;width:110px;height:30px;font-size: 18px;color: #6d6a6a;}
+#totalSum{font-size: 18px;}
+</style>
+</head>
+
+<body>
+<div class="setting-frame-content">
+    <div class="form-group">
+        <div class="layui-form" style="display: inline-block;">
+        
+            <div class="layui-form-item" id="parkAndCompany" style="display: inline-block;">
+                <label class="layui-form-label">停车场名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="searchFinanceParking" id="searchFinanceParking" lay-verify="searchFinanceParking" autocomplete="off"
+                        placeholder="请输入停车场名称" class="layui-input">
+                </div>
+            </div>
+			<div class="layui-form-item" style="display: inline-block;">
+				<label class="layui-form-label">支付时间</label>
+				<div class="layui-input-block">
+					<input type="text" name="searchStartTime" id="searchStartTime" autocomplete="off"
+                       	placeholder="请选择开始时间" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-input-block" style="display: inline-block;margin-left: 0px !important;">
+				<input type="text" name="searchEndTime" id="searchEndTime" autocomplete="off"
+                      	placeholder="请选择结束时间" class="layui-input">
+			</div>
+			<div class="layui-form-item" style="display: inline-block;">
+					<label class="layui-form-label">支付类型</label>
+					<div class="layui-input-block">
+						<select id="payType" name="payType" lay-filter="payType">
+							<option value="">请选择支付类型</option>
+							<option value="1">支付宝</option>
+							<option value="2">微信</option>
+							<option value="3">余额</option>
+						</select>
+					</div>
+			</div>
+			<div class="layui-form-item" style="display: inline-block;">
+					<label class="layui-form-label">支付状态</label>
+					<div class="layui-input-block">
+						<select id="payStatus" name="payStatus" lay-filter="payStatus">
+							<option value="">请选择支付状态</option>
+							<option value="0">未支付</option>
+							<option value="1">已支付</option>
+							<option value="2">支付失败</option>
+						</select>
+					</div>
+			</div>
+			<div class="layui-form-item" style="display: inline-block;">
+					<label class="layui-form-label">提现状态</label>
+					<div class="layui-input-block">
+						<select id="isTransfer" name="isTransfer" lay-filter="isTransfer">
+							<option value="">请选择提现状态</option>
+							<option value="0">未提现</option>
+							<option value="1">已提现</option>
+						</select>
+					</div>
+			</div>
+            <div id="orderSearch" class="layui-btn search">搜索</div>
+            
+            <div class="layui-form-item none" id="orderApplyCash">
+            	<div class="totalSum">可提现金额：</div>
+            	<span id="totalSum"></span>
+            	<button class="layui-btn apply" id="withdrawApply">申请提现</button>
+            </div>
+        </div>
+        <table class="layui-hide" id="orderTable" lay-filter="orderTable"></table>
+
+    </div>
+</div>
+
+<script th:inline="javascript">
+	 var type = [[${#request.getAttribute("type")}]]; 
+	 var totalFee = [[${#request.getAttribute("fee")}]]; 
+	 document.getElementById("totalSum").innerHTML = totalFee;
+     requirejs([contextPath + '/js/order/order.js?v=' + (new Date()).getTime()]);
+</script>
+
+</body>
+
+</html>

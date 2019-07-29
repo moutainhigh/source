@@ -1,0 +1,236 @@
+define(['jquery', 'layui', 'until'], function ($, LAYUI, until) {
+	layui.use(['table', 'form','laydate'], function () {
+		if(type!=1){
+			// $("#companyName").addClass("none");
+			$("#companyName").html('');
+			$("#companyName").html('<div id="exportExcel" class="layui-btn">导出</div>');
+		}
+		var form = layui.form;
+		
+		$("#searchFinanceCompany").empty();
+		$("#searchFinanceCompany").append('<option value="" selected="selected">请选择</option>');
+		$.each(companyName, function(i, obj){
+			$("#searchFinanceCompany").append('<option value="'+ obj +'" >'+ obj +'</option>');
+		});
+		
+		form.render();
+		
+		var table = layui.table;
+		table.render({
+			elem: '#withdrawTable',
+			url: contextPath + "/order/getWithdrawData",
+			method: 'post',
+			cellMinWidth: 100, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+			skin: 'line',
+			where: {
+				sortName: 'createTime',
+				direction: 'desc'
+			},
+			cols: [[
+				{ field: 'companyName', title: '公司名称', sort: true,hide:type==1?false:true},
+				{ field: 'bankNum', title: '公司银行卡账号', sort: true,hide:type==1?false:true},
+				{ field: 'bankHolder', title: '银行卡持有人', sort: true,hide:type==1?false:true},
+				{ field: 'createTime', title: '提交时间', sort: true, align: 'center' ,templet:function(data){
+					if(data.createTime){
+						return until.formatDateTime(data.createTime);
+					}else {
+						return "<span style='color: red;'>未处理</span>";
+					}
+				  } 
+				},
+				{ field: 'applyStatus', title: '申请状态', sort: true, align: 'center' , templet:function(data){
+					if(data.applyStatus == 0){
+						return "审核中";
+					}else if(data.applyStatus == 1){
+						return "审核通过";
+					}else if(data.applyStatus == 3){
+						return "审核不通过";
+					}
+				  }
+				},
+				{ field: 'handleTime', title: '处理时间', sort: true, align: 'center' ,templet:function(data){
+					if(data.handleTime == null){
+						return "";
+					}else {
+						return until.formatDateTime(data.handleTime);
+					}
+				  } 
+				},
+				{ field: 'moneyStatus', title: '资金状态', sort: true, align: 'center', templet:function(data){
+					if(data.moneyStatus == 0){
+						return "未转账";
+					}else if(data.moneyStatus == 1){
+						return "已转账";
+					}
+				  }
+				},
+				{ field: 'free', title: '提现金额', sort: true, align: 'center'},
+				{ fixed : 'right', title : '操作', align : 'center',width:180, hide:type==1?false:true, templet:function(data){
+					var button = "<button lay-event='details' class='layui-btn layui-btn-xs'>账单明细</button>";
+					if(data.applyStatus == 0){
+						button += "<button class='layui-btn layui-btn-xs' lay-event='edit'>同意该申请</button> ";
+					}else if(data.moneyStatus == 0){
+						button += "<button class='layui-btn layui-btn-xs' lay-event='edit'>确认转账</button> ";
+					}else{
+						button += "已完成";
+					};
+					return button;
+				  }
+				},
+				{ fixed : 'right', title : '操作', align : 'center',width:180, hide:type!=1?false:true, templet:function(data){
+					var button = "<button lay-event='details' class='layui-btn layui-btn-xs'>账单明细</button>";
+					return button;
+				  }
+				}
+			]],
+			done: function () {
+
+			},
+			response: {
+				countName: 'totalElements',  //规定数据总数的字段名称，默认：count
+				dataName: 'content' //规定数据列表的字段名称，默认：data
+			},
+			page: true
+		});
+
+		$("#withdrawSearch").click(function () {
+			table.reload('withdrawTable', {
+				where: { //设定异步数据接口的额外参数，任意设
+					searchCompany: $("#searchFinanceCompany").val()
+				},
+				page: {
+					curr: 1 //重新从第 1 页开始
+				}
+			});
+		});
+
+        $("#exportExcel").click(function () {
+        	if($("#searchFinanceCompany").val() != undefined){
+                window.location.href = contextPath + "/order/exportApplyCashExcel"
+                    +"?searchCompany="+$("#searchFinanceCompany").val();
+			}else{
+                window.location.href = contextPath + "/order/exportApplyCashExcel";
+			}
+        });
+
+
+        //监听行工具事件
+		table.on('tool(withdrawTable)', function (obj) {
+			var data = obj.data;
+			var responseUrl;
+			var msg='';
+			if(data.applyStatus == 0){
+				responseUrl = "/order/agreeToApply";
+				msg='同意这条提现申请？';
+			}else if(data.moneyStatus == 0){
+				responseUrl = "/order/transferAccounts";
+				msg='请确保转账给对方了再点击确定！';
+			}
+			if (obj.event === 'edit') {
+				layer.confirm(msg, function (index1) {
+					$.ajax({
+						//提交提现申请
+						url: contextPath + responseUrl,
+						dataType: 'json',
+						type: 'post',
+						data: {
+							id:data.id,
+							moneyStatus:data.moneyStatus,
+							applyStatus:data.applyStatus
+						},
+						complete: function (XHR, TS) {
+							var returnObj = eval('(' + XHR.responseText + ')');
+							if (returnObj.code != 200) {
+								layer.msg(returnObj.msg, {
+									icon : 2,
+									time : 1500
+								});
+							} else {
+								layer.msg(returnObj.msg, {
+									icon : 1,
+									time : 1500
+								});
+							}
+							table.reload('withdrawTable');
+						}
+					});
+				});
+				
+			}else if(obj.event === 'details'){//账单明细
+					var showContent = $('#showBillDetail').html();
+					$('#showBillDetail').html("");
+					
+					layer.open({
+						type : 1,
+						id : 'showLayui',
+						title : '账单明细',
+						content : showContent,
+						area : ['1000px','600px'],
+						btnAlign: 'c',
+						offset: 'auto',
+						
+						success: function(layero, index){
+							table.render({
+								elem: '#billDetailTable',
+								url: contextPath + "/order/getDetails",
+								method: 'post',
+								cellMinWidth: 100, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+								skin: 'line',
+								where: {
+									sortName: 'payTime',
+									direction: 'desc',
+									orderIds: data.orderIds
+								},
+								cols: [[
+									{ field: 'parkName', title: '停车场名称', sort: true, align: 'center'},
+									{ field: 'parkingInfoLicensePlate', title: '车牌号码', sort: true, align: 'center'},
+									{ field: 'finalFee', title: '支付金额', sort: true, align: 'center'},
+									{ field: 'payTime', title: '支付时间', sort: true, align: 'center' ,templet:function(data){
+										if(data.pay_time){
+											return until.formatDateTime(data.pay_time);
+										}else {
+											return "无";
+										}
+									  } 
+									},
+									{ field: 'type', title: '支付类型', sort: true, align: 'center' , templet:function(data){
+										if(data.type == 1){
+											return "支付宝";
+										}else if(data.type == 2){
+											return "微信";
+										}else if(data.type == 3){
+											return "余额";
+										}
+									  }
+									},
+									{ field: 'status', title: '支付状态', sort: true, align: 'center' ,templet:function(data){
+										if(data.status == 0){
+											return "未支付";
+										}else if(data.status == 1){
+											return "已支付";
+										}else{
+											return "支付失败";
+										}
+									  } 
+									}
+								]],
+								done: function () {
+
+								},
+								response: {
+									countName: 'totalElements',  //规定数据总数的字段名称，默认：count
+									dataName: 'content' //规定数据列表的字段名称，默认：data
+								},
+								page: true
+							});
+						},
+						end: function () { //只要层被销毁了，end都会执行
+							$('#showBillDetail').html(showContent);
+						}
+					});
+					
+			}
+		});//table.on
+	
+	});//layui.use
+});

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>云停车平台</title>
+</head>
+
+<body>
+<div class="setting-frame-content">
+    <div class="form-group">
+        <div class="layui-form" style="display: inline-block;">
+        
+            <div class="layui-form-item" style="display: inline-block;">
+                <label class="layui-form-label" id="cloneLicensePlate">车牌号码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" id="searchLicensePlate" autocomplete="off" placeholder="请输入车牌号码" class="layui-input" oninput="if(value.length>10)value=value.slice(0,10)">
+                </div>
+            </div>
+			<div class="layui-form-item" style="display: inline-block;">
+                <label class="layui-form-label" id="cloneTime">记录时间</label>
+                <div class="layui-input-block">
+                    <input type="text" id="searchStartTime" name="searchStartTime" lay-verify="searchStartTime" autocomplete="off" placeholder="请输入开始时间" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-input-block" style="display: inline-block;margin-left: 0px !important;">
+                <input type="text" id="searchEndTime" name="searchEndTime" lay-verify="searchEndTime" autocomplete="off" placeholder="请输入结束时间" class="layui-input">
+            </div>
+			<!-- <div class="layui-form-item" style="display: inline-block;">
+            	<label class="layui-form-label">状态</label>
+                <div class="layui-input-block">
+                    <select class="select" id="searchStatus" lay-verify="searchStatus">
+                        <option value="">全部</option>
+                        <option value="0">未发送提示信息</option>
+                        <option value="1">已发送提示信息</option>
+                    </select>
+                </div>
+             </div> -->
+
+             <div id="searchParkingSpace" class="layui-btn search">搜索</div>
+            </div>
+        </div>
+
+        <table class="layui-hide" id="CloneCarTable" lay-filter="CloneCarTable"></table>
+
+        <script type="text/html" id="cloneCarBar">
+            <a class="layui-btn layui-btn-xs" lay-event="viewDetail">查看详情</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+        <script type="text/html" id="cloneCarBarEnglish">
+            <a class="layui-btn layui-btn-xs" lay-event="viewDetail">Details</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">Del</a>
+        </script>
+    </div>
+
+<div id="showCloneCarDetail" style="display: none;">
+    <!-- <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>套牌车记录</legend>
+    </fieldset> -->
+    <div style="padding:10px 20px;">
+        <ul class="layui-timeline" id="cloneCarContent"></ul>
+    </div>
+</div>
+<script th:inline="javascript">
+	var i18n = [[${#request.getAttribute("i18n")}]];
+	</script>
+<script>
+    requirejs([contextPath + '/js/cloneCar/cloneCar.js?v=' + (new Date()).getTime()]);
+</script>
+</body>
+</html>

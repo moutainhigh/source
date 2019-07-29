@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+<link rel="stylesheet" th:href="@{thirdplugin/zTree_v3/css/zTreeStyle/zTreeStyle.css}">
+<style type="text/css">
+.show-tree-box { border: 1px solid #ddd; }
+</style>
+</head>
+<body>
+<div class="setting-frame-content">
+	<label class="layui-form-label">角色名称</label>
+	<div class="layui-input-inline">
+			<input type="text"
+				   class="layui-input"
+				   name="RoleName"
+				   id="RoleName"
+				   autocomplete="off"
+				   placeholder="请输入角色名称"
+				   maxlength="6">
+			<!--<input type="password" style="display:none">-->
+			<!--<input type="password">-->
+	</div>
+	<div id="searchRoleName" class="layui-btn search"  >搜索</div>
+	<div id="addSysRole" class="layui-btn" style="display: inline-block;">添加角色</div>
+	<table class="layui-hide" id="sysRoleTable" lay-filter="sysRoleTable"></table>
+	<script type="text/html" id="sysRoleTableBar">
+  		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+</div>
+<div id="showSysRoleContent" style="display: none;">
+	<!-- 内容显示区域start -->
+	<div class="layuiWindownContent">
+		<div class="layui-form" lay-filter="sysRoleFrom">
+			<div class="layui-form-item">
+			    <label class="layui-form-label"><span style="color:red;">*</span>角色名称</label>
+			    <div class="layui-input-block">
+			        <input type="text" id="roleNameInp" name="roleNameInp" placeholder="请填写角色名称" autocomplete="off" 
+			        class="layui-input" onkeydown="if(event.keyCode==32) return false" maxlength="30" readonly onfocus="this.removeAttribute('readonly')">
+			    </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">备注</label>
+			    <div class="layui-input-block">
+			        <input type="text" id="remarkInp" name="remarkInp" placeholder="请填写备注" autocomplete="off" class="layui-input" onkeydown="if(event.keyCode==32) return false" maxlength="50">
+			    </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">角色类型</label>
+			    <div class="layui-input-block">
+			        <input type="radio" name="roleType" lay-filter = "roleIdentity" value="1" title="系统管理员" checked="">
+			        <input type="radio" name="roleType" lay-filter = "roleIdentity" value="2" title="公司管理员">
+			    </div>
+			</div>
+			<div class="layui-form-item" id="showSysTreeBox">
+			    <label class="layui-form-label"><span style="color:red;">*</span>可选菜单</label>
+			    <div class="layui-input-block">
+			        <div class="show-tree-box">
+						<ul id="sysMenutree" class="ztree"></ul>
+					</div>
+			    </div>
+			</div>
+			<div class="layui-form-item" id="showParkingTreeBox">
+			    <label class="layui-form-label"><span style="color:red;">*</span>可选菜单</label>
+			    <div class="layui-input-block">
+			        <div class="show-tree-box">
+						<ul id="parkingMenutree" class="ztree"></ul>
+					</div>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<!-- 内容显示区域end -->
+</div>
+<script th:inline="javascript">
+	var initSysMenuData = [[${#request.getAttribute("sysMenuData")}]];
+	var initParkingMenuData = [[${#request.getAttribute("parkingMenuData")}]];
+</script>
+<script>
+    requirejs([contextPath + '/js/sysRole/sysRole.js?v=' + (new Date()).getTime()]);
+</script>
+</body>
+</html>

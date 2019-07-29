@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>云停车平台</title>
+	<style>
+		.red{color:red}
+	</style>
+</head>
+<body>
+
+<div class="setting-frame-content">
+		<div class="layui-form" style="display: inline-block;">
+			<div class="layui-input-block" style="display: inline-block;margin-left: 0px !important;">
+				<input type="text" name="searchConcessionParking" id="searchConcessionParking" autocomplete="off" placeholder="请输入停车场名字" class="layui-input">
+			</div>
+			<div id="searchParkingName" class="layui-btn search" >查询停车场</div>
+		</div>
+		<table class="layui-hide" id="parkingConcessionTable" lay-filter="parkingConcessionTable"></table>
+		<!--<script type="text/html" id="parkingConcessionBar">-->
+  			<!--<a class="layui-btn layui-btn-xs" lay-event="examine">审核</a>-->
+  			<!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+		<!--</script>-->
+</div>
+
+
+<div id="examineContent" style="display: none;">
+	<!-- 内容显示区域 start -->
+	<div class="layuiWindownContent">
+		<div class="layui-form font-num-6" lay-filter="examineFrom">
+			<div class="layui-form-item">
+				<label class="layui-form-label"><span class="red">* </span>是否通过</label>
+				<div class="layui-input-block">
+					<input type="checkbox" id="isPass" name="isPass" lay-skin="switch" lay-text="是|否" lay-filter="isPassFilter">
+					<input type="hidden" id="isPassHidden">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 内容显示区域 end -->
+</div>
+<script th:inline="javascript">
+	var i18n = [[${#request.getAttribute("i18n")}]];
+</script>
+<script>
+	requirejs([contextPath+'/js/parkingConcession/parkingConcession.js?v='+(new Date()).getTime()]);
+</script>
+</body>
+</html>
